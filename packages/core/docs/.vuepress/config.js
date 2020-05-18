@@ -5,6 +5,7 @@ module.exports = {
     nav: [
       { text: 'General information', link: '/' },
       { text: 'Commercetools', link: '/commercetools/' },
+      { text: 'About You Cloud', link: '/aboutyou/' },
       { text: 'Shopware', items: [
         { text: 'Documentation' , link: 'https://shopware-pwa-docs.netlify.com/#introduction-to-shopware-pwa'},
         { text: 'Demo' , link: 'https://shopware-pwa.storefrontcloud.io/'},
@@ -46,6 +47,26 @@ module.exports = {
           ],
         }
       ],
+      '/aboutyou/': [
+        {
+          title: 'Essentials',
+          collapsable: false,
+          children: [
+            ['/aboutyou/', 'Introduction'],
+            ['/aboutyou/getting-started', 'Getting Started'],
+            ['/aboutyou/api-client', 'API Client'],
+            ['/aboutyou/composables', 'Composables'],
+            ['/aboutyou/feature-list', 'Feature list']
+          ]
+        },
+        {
+          title: 'Composables',
+          collapsable: false,
+          children: [
+            ['/aboutyou/use-product', 'useProduct'],
+          ]
+        }
+      ],
       '/integration/': [
         {
           title: 'Integration tutorial',
@@ -63,6 +84,7 @@ module.exports = {
           collapsable: false,
           children: [
             ['/contributing/workflow', 'Development workflow'],
+            ['/contributing/api-design-philosophy', 'API Design Philosophy'],
             ['/contributing/themes', 'Working with themes'],
           ],
         },
