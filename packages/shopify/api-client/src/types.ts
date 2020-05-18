@@ -115,6 +115,7 @@ export type CategorySearchParams = {
 export type ProductSearchParams = {
   id: Maybe<Scalars['String']>;
   // ids: Maybe<Scalars['Json']>;
+  slug: Maybe<Scalars['String']>;
   handle: Maybe<Scalars['String']>;
   customQuery: Maybe<Scalars['Json']>;
   ids: any;
