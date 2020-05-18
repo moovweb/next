@@ -49,3 +49,21 @@ then run the app
 ```sh
 yarn dev:ct
 ```
+
+## Shopify
+**Verify by api-client packages:**
+```sh
+yarn build:sp:api-client
+```
+**Start api-client for development mode:**
+```sh
+yarn dev:sp:api-client
+```
+**Build full package:**
+```sh
+yarn build:sp
+```
+**Start app in development mode:**
+```sh
+yarn dev:sp
+```
