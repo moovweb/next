@@ -14,6 +14,7 @@ const productsSearch = async (params): Promise<ProductsSearchResult<Product, any
     term: params.term,
     id: params.id,
     handle: params.handle,
+    slug: params.slug,
     customQuery: params.customQuery
   };
   console.log('AL: product trace: useComposable: productsSearch - 02', searchParams);
