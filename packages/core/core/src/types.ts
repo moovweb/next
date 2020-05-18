@@ -1,16 +1,19 @@
+/* istanbul ignore file */
+
 import { Ref } from '@vue/composition-api';
 
 export type ComputedProperty<T> = Readonly<Ref<Readonly<T>>>;
 
-export interface UseProduct<PRODUCT> {
+export interface UseProduct<PRODUCT, PRODUCT_FILTERS> {
   products: ComputedProperty<PRODUCT[]>;
   totalProducts: ComputedProperty<number>;
+  availableFilters: ComputedProperty<PRODUCT_FILTERS>;
   search: (params: {
     perPage?: number;
     page?: number;
     sort?: any;
     term?: any;
-    filters?: any;
+    filters?: PRODUCT_FILTERS;
     [x: string]: any;
   }) => Promise<void>;
   loading: ComputedProperty<boolean>;
@@ -94,7 +97,7 @@ export interface UseCart
   coupon: ComputedProperty<COUPON | null>;
   applyCoupon: (coupon: string) => Promise<void>;
   removeCoupon: () => Promise<void>;
-  refreshCart: () => Promise<void>;
+  loadCart: () => Promise<void>;
   loading: ComputedProperty<boolean>;
 }
 
