@@ -41,7 +41,6 @@ export const getProductCoverImage = (product: ProductVariant): string => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductFiltered = (products: ProductVariant[] | ProductVariant, filters: ProductVariantFilters | any = {}): ProductVariant[] => {
-  console.log('AL: product trace: getProductFiltered', products, filters);
   return Array.isArray(products) ? products : [products];
 };
 
@@ -50,7 +49,10 @@ export const getProductAttributes = (products: ProductVariant[] | ProductVariant
   return {};
 };
 
-export const getProductDescription = (product: ProductVariant): any => (product as any).description;
+export const getProductDescription = (product: ProductVariant, isWantHtml?: boolean): any => {
+  if (isWantHtml) (product as any).descriptionHtml;
+  return (product as any).description;
+};
 
 export const getProductCategoryIds = (product: ProductVariant): string[] => [(product as any).id];
 
