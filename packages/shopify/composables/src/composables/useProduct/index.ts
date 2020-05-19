@@ -2,7 +2,7 @@ import { getProduct } from '@vue-storefront/shopify-api';
 import { useProductFactory, ProductsSearchResult } from '@vue-storefront/core';
 import { UseProduct, Product } from '../../types';
 
-const productsSearch = async (params): Promise<ProductsSearchResult<Product, any>> => {
+const productsSearch = async (params): Promise<ProductsSearchResult<Product>> => {
   console.log('AL: product trace: useComposable: productsSearch - 01', params);
   const searchParams = {
     ids: params.ids,
@@ -26,7 +26,7 @@ const productsSearch = async (params): Promise<ProductsSearchResult<Product, any
   };
 };
 
-const useProduct: (cacheId: string) => UseProduct<Product, any> = useProductFactory<Product, any, any>({
+const useProduct: (cacheId: string) => UseProduct<Product> = useProductFactory<Product, any>({
   productsSearch
 });
 
