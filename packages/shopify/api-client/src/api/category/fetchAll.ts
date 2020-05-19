@@ -18,7 +18,6 @@ async function fetchAll(): Promise<Category[]> {
     .then((collections) => {
       return collections;
     });
-  console.log('Founded category is', collections);
   return collections;
 }
 
