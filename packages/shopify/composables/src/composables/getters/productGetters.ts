@@ -58,7 +58,7 @@ export const getProductCategoryIds = (product: ProductVariant): string[] => [(pr
 
 export const getProductId = (product: ProductVariant): string => (product as any).id;
 
-export const getFormattedPrice = (price: number): string => price ? `${price}€` : '';
+export const getFormattedPrice = (price: number): string => price ? `₹ ${price}` : '';
 
 const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getName: getProductName,
