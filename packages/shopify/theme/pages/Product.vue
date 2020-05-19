@@ -60,36 +60,37 @@
             >
           </div>
           <!-- TODO: add size selector after design is added -->
-          <div class="product-details__section desktop-only" >
-            <SfSelect
-              data-cy="product-select_size"
-              v-if="options.size"
-              :selected="configuration.size"
-              @change="size => updateFilter({ size })"
-              label="Size"
-              class="sf-select--underlined product-details__attribute"
-            >
-              <SfSelectOption
-                v-for="size in options.size"
-                :key="size.value"
-                :value="size.value"
-              >
-                <SfProductOption :label="size.label" />
-              </SfSelectOption>
-            </SfSelect>
+          <div class="product-details__section desktop-only" v-if="options.length > 0">
+            <template v-for="(option, i) in options">
+              <div v-if="option.name === 'size' || option.name === 'Size'">
+                <SfSelect
+                  @change="size => updateFilter({ size })"
+                  :label="option.name"
+                  class="sf-select--underlined product-details__attribute"
+                >
+                  <SfSelectOption
+                    v-for="sizeName in option.values"
+                    :key="sizeName"
+                    :value="sizeName"
+                  >
+                    {{ sizeName }}
+                  </SfSelectOption>
+                </SfSelect>
+              </div>
+              <div v-if="option.name === 'Color' || option.name === 'Color'">
+                <p class="product-details__color-label">Color:</p>
+                <!-- TODO: handle selected logic differently as the selected prop for SfColor is a boolean -->
+                <SfColor
+                  data-cy="product-color_update"
+                  v-for="(color, i) in option.values"
+                  :key="i"
+                  :color="color"
+                  class="product-details__color"
+                  @click="updateFilter({color})"
+                />
+              </div>
+            </template>
             <!-- TODO: add color picker after PR done by SFUI team -->
-            <div v-if="options.color" class="product-details__colors desktop-only">
-            <p class="product-details__color-label">Color:</p>
-            <!-- TODO: handle selected logic differently as the selected prop for SfColor is a boolean -->
-            <SfColor
-              data-cy="product-color_update"
-              v-for="(color, i) in options.color"
-              :key="i"
-              :color="color.value"
-              class="product-details__color"
-              @click="updateFilter({color})"
-            />
-          </div>
           </div>
           <div class="product-details__section desktop-only">
             <SfAddToCart
@@ -227,9 +228,10 @@ export default {
     const { addToCart, loading } = useCart();
 
     const product = computed(() => productGetters.getFiltered(products.value, { master: true, attributes: context.root.$route.query })[0]);
-    const options = computed(() => productGetters.getAttributes(products.value, ['color', 'size']));
+    // const options = computed(() => productGetters.getAttributes(products.value, ['color', 'size']));
     const configuration = computed(() => productGetters.getAttributes(product.value, ['color', 'size']));
     const categories = computed(() => productGetters.getCategoryIds(product.value));
+    const options = computed(() => productGetters.getOptions(product.value));
 
     onSSR(async () => {
       // await loadCart();

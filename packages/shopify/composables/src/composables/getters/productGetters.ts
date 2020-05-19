@@ -49,6 +49,11 @@ export const getProductAttributes = (products: ProductVariant[] | ProductVariant
   return {};
 };
 
+export const getProductOptions = (product: ProductVariant): Record<string, AgnosticAttribute | string> => {
+  const productOptions = (product as any).options;
+  return productOptions;
+};
+
 export const getProductDescription = (product: ProductVariant, isWantHtml?: boolean): any => {
   if (isWantHtml) (product as any).descriptionHtml;
   return (product as any).description;
@@ -68,6 +73,7 @@ const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getCoverImage: getProductCoverImage,
   getFiltered: getProductFiltered,
   getAttributes: getProductAttributes,
+  getOptions: getProductOptions,
   getDescription: getProductDescription,
   getCategoryIds: getProductCategoryIds,
   getId: getProductId,
