@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-
-import { UseCart, useCartFactory, UseCartFactoryParams } from '@vue-storefront/core';
+import { useCartFactory, UseCartFactoryParams } from '@vue-storefront/core';
 import { ref, Ref } from '@vue/composition-api';
 import { addToCart, removeCart, updateProductQty, cookies } from '@vue-storefront/shopify-api';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CartParams } from '@vue-storefront/shopify-api/src/types';
-import { Cart, CartItem, Coupon, Product } from '../../types';
+import { Cart, CartItem, CartParams, Product } from '@vue-storefront/shopify-api/src/types';
+import { Coupon } from '../../types';
 import loadCurrentCart from './loadCurrentCart';
 import Cookies from 'js-cookie';
 
@@ -67,15 +66,15 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   clearCart: async ({ currentCart }) => {
-    return {};
+    return currentCart;
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   applyCoupon: async ({ currentCart, coupon }) => {
-    return {updatedCart: {}, updatedCoupon: {}};
+    return {updatedCart: currentCart, updatedCoupon: {}};
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeCoupon: async ({ currentCart }) => {
-    return {updatedCart: {}, updatedCoupon: {}};
+    return {updatedCart: currentCart, updatedCoupon: {}};
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isOnCart: ({ currentCart }) => {
@@ -83,6 +82,11 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
   }
 };
 
-const useCart: () => UseCart<Cart, CartItem, Product, Coupon> = useCartFactory<Cart, CartItem, Product, Coupon>(params);
+// const { useCart, setCart }: {
+//   useCart: () => UseCart<Cart, CartItem, Product, any>;
+//   setCart: (Cart) => void;
+// } = useCartFactory<Cart, CartItem, Product, any>(params);
 
-export default useCart;
+const { setCart, useCart } = useCartFactory<Cart, CartItem, Product, Coupon>(params);
+
+export { setCart, useCart};
