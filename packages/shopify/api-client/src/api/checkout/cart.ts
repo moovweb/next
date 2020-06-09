@@ -12,12 +12,14 @@ import { Cart, CartParams } from '../../types';
  * @param {String} checkoutId The id of the checkout to fetch.
  * @return {Promise|GraphModel} A promise resolving with a `GraphModel` of the checkout.
  */
-async function getCart(options: CartParams): Promise<Cart[]> {
+async function getCartFn(options: CartParams): Promise<Cart> {
+  console.log('AL: Cart Trace: API: getCartFn', options);
   const checkout = await _shopifyClient.checkout
-    .fetch(options.checkoutId)
+    .fetch(options.id)
     .then((checkout) => {
       return checkout;
     });
+  console.log('AL: Cart Trace: API: getCartFn - response', checkout);
   return checkout;
 }
 
@@ -44,7 +46,7 @@ async function getCart(options: CartParams): Promise<Cart[]> {
  *   @param {String} [input.presentmentCurrencyCode ] A presentment currency code. See the {@link https://help.shopify.com/en/api/storefront-api/reference/enum/currencycode|Storefront API reference} for valid currency code values.
  * @return {Promise|GraphModel} A promise resolving with the created checkout.
  */
-async function createCart(options: CartParams): Promise<Cart[]> {
+async function createCartFn(options: CartParams): Promise<Cart> {
   const checkout = await _shopifyClient.checkout
     .create(options.input)
     .then((checkout) => {
@@ -68,9 +70,9 @@ async function createCart(options: CartParams): Promise<Cart[]> {
  * @param {Object[]} lineItems A list of line items to add to the checkout. See the {@link https://help.shopify.com/api/storefront-api/reference/input-object/checkoutlineiteminput|Storefront API reference} for valid input fields for each line item.
  * @return {Promise|GraphModel} A promise resolving with the updated checkout.
  */
-async function addToCart(options: CartParams): Promise<Cart[]> {
+async function addToCartFn(options: CartParams): Promise<Cart> {
   const checkout = await _shopifyClient.checkout
-    .addLineItems(options.checkoutId, options.lineItems)
+    .addLineItems(options.id, options.lineItems)
     .then((checkout) => {
       return checkout;
     });
@@ -95,9 +97,9 @@ async function addToCart(options: CartParams): Promise<Cart[]> {
  *   @param {String} [input.note] A note for the checkout.
  * @return {Promise|GraphModel} A promise resolving with the updated checkout.
  */
-async function updateAttribute(options: CartParams): Promise<Cart[]> {
+async function updateAttributeFn(options: CartParams): Promise<Cart> {
   const checkout = await _shopifyClient.checkout
-    .updateAttributes(options.checkoutId, options.input)
+    .updateAttributes(options.id, options.input)
     .then((checkout) => {
       return checkout;
     });
@@ -119,9 +121,9 @@ async function updateAttribute(options: CartParams): Promise<Cart[]> {
  * @param {String[]} lineItemIds A list of the ids of line items to remove from the checkout.
  * @return {Promise|GraphModel} A promise resolving with the updated checkout.
  */
-async function removeCart(options: CartParams): Promise<Cart[]> {
+async function removeCartFn(options: CartParams): Promise<Cart> {
   const checkout = await _shopifyClient.checkout
-    .removeLineItems(options.checkoutId, options.lineItemIds)
+    .removeLineItems(options.id, options.lineItemIds)
     .then((checkout) => {
       return checkout;
     });
@@ -143,9 +145,9 @@ async function removeCart(options: CartParams): Promise<Cart[]> {
  * @param {Object[]} lineItems A list of line items to set on the checkout. See the {@link https://help.shopify.com/api/storefront-api/reference/input-object/checkoutlineiteminput|Storefront API reference} for valid input fields for each line item.
  * @return {Promise|GraphModel} A promise resolving with the updated checkout.
  */
-async function updateProductQty(options: CartParams): Promise<Cart[]> {
-  const checkout = await _shopifyClient.product
-    .replaceLineItems(options.checkoutId, options.lineItems)
+async function updateProductQtyFn(options: CartParams): Promise<Cart> {
+  const checkout = await _shopifyClient.checkout
+    .replaceLineItems(options.id, options.lineItems)
     .then((checkout) => {
       return checkout;
     });
@@ -173,23 +175,19 @@ async function updateProductQty(options: CartParams): Promise<Cart[]> {
  * @param {Object[]} lineItems A list of line item information to update. See the {@link https://help.shopify.com/api/storefront-api/reference/input-object/checkoutlineitemupdateinput|Storefront API reference} for valid input fields for each line item.
  * @return {Promise|GraphModel} A promise resolving with the updated checkout.
  */
-async function updateCart(options: CartParams): Promise<Cart[]> {
-  const checkout = await _shopifyClient.product
-    .updateLineItems(options.checkoutId, options.lineItems)
+async function updateCartFn(options: CartParams): Promise<Cart> {
+  const checkout = await _shopifyClient.checkout
+    .updateLineItems(options.id, options.lineItems)
     .then((checkout) => {
       return checkout;
     });
   return checkout;
 }
 
-const cart = {
-  getCart: getCart,
-  createCart: createCart,
-  addToCart: addToCart,
-  updateAttribute: updateAttribute,
-  removeCart: removeCart,
-  updateCart: updateCart,
-  updateProductQty: updateProductQty
-};
-
-export default cart;
+export const getCart = getCartFn;
+export const createCart = createCartFn;
+export const addToCart = addToCartFn;
+export const updateProductQty = updateProductQtyFn;
+export const removeCart = removeCartFn;
+export const updateCart = updateCartFn;
+export const updateAttribute = updateAttributeFn;

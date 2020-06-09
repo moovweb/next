@@ -22,6 +22,15 @@
             }
           ]"
         /> -->
+        <!-- {{ productGetters.getGallery(product) }} -->
+        <!-- <SfGallery
+          :images="productGetters.getGallery(product)"
+          :image-width="590"
+          :image-height="700"
+          :slider-options="{ autoplay: false, rewind: true, gap: 0 }"
+          :current="1"
+          :enable-zoom="false"
+        /> -->
         <SfImage
           v-for="(image, i) in productGetters.getGallery(product)" :key="i"
           :src="image.big"
@@ -36,10 +45,20 @@
             :level="1"
             class="sf-heading--no-underline sf-heading--left product-details__heading"
           />
+          <SfBadge class="sf-badge--number" :class="productGetters.getStatus(product) ? 'color-success' : 'color-danger'">
+            {{ productGetters.getStatus(product) ? 'In stock' : 'Out of Stock' }}
+          </SfBadge>
           <div class="product-details__sub">
             <SfPrice
+              v-if="productGetters.hasSpecialPrice(product)"
+              class="sf-product-card__price"
               :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
               :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
+            />
+            <SfPrice
+              v-else
+              class="sf-product-card__price"
+              :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
             />
             <div class="product-details__sub-rating">
               <SfRating :score="4" :max="5" />
@@ -62,35 +81,37 @@
           <!-- TODO: add size selector after design is added -->
           <div class="product-details__section desktop-only" v-if="options.length > 0">
             <template v-for="(option, i) in options">
-              <div v-if="option.name === 'size' || option.name === 'Size'">
+              <div v-if="option.name === 'size' || option.name === 'Size'" v-bind:key="i">
                 <SfSelect
                   @change="size => updateFilter({ size })"
                   :label="option.name"
                   class="sf-select--underlined product-details__attribute"
                 >
                   <SfSelectOption
-                    v-for="sizeName in option.values"
-                    :key="sizeName"
-                    :value="sizeName"
+                    v-for="size in option.values"
+                    :key="size.value"
+                    :value="size.value"
                   >
-                    {{ sizeName }}
+                    <SfProductOption :label="size.value" />
                   </SfSelectOption>
                 </SfSelect>
               </div>
-              <div v-if="option.name === 'Color' || option.name === 'Color'">
-                <p class="product-details__color-label">Color:</p>
-                <!-- TODO: handle selected logic differently as the selected prop for SfColor is a boolean -->
-                <SfColor
-                  data-cy="product-color_update"
-                  v-for="(color, i) in option.values"
-                  :key="i"
-                  :color="color"
-                  class="product-details__color"
-                  @click="updateFilter({color})"
-                />
+              <div v-else-if="option.name === 'Color' || option.name === 'Color'" v-bind:key="i">
+                <SfSelect
+                  @change="color => updateFilter({ color })"
+                  :label="option.name"
+                  class="sf-select--underlined product-details__attribute"
+                >
+                  <SfSelectOption
+                    v-for="colorName in option.values"
+                    :key="colorName.value"
+                    :value="colorName.value"
+                  >
+                    <SfProductOption :color="colorName.value" :label="colorName.value" />
+                  </SfSelectOption>
+                </SfSelect>
               </div>
             </template>
-            <!-- TODO: add color picker after PR done by SFUI team -->
           </div>
           <div class="product-details__section desktop-only">
             <SfAddToCart
@@ -208,7 +229,8 @@ import {
   SfReview,
   SfBreadcrumbs,
   SfButton,
-  SfColor
+  SfColor,
+  SfBadge
 } from '@storefront-ui/vue';
 
 import InstagramFeed from '~/components/InstagramFeed.vue';
@@ -222,28 +244,30 @@ export default {
   transition: 'fade',
   setup(props, context) {
     const qty = ref(1);
-    const { id } = context.root.$route.params;
+    const { slug } = context.root.$route.params;
     const { products, search } = useProduct('products');
     const { products: relatedProducts, search: searchRelatedProducts, loading: relatedLoading } = useProduct('relatedProducts');
-    const { addToCart, loading } = useCart();
+    const { cart, addToCart, loading, loadCart } = useCart('cart');
+    // const contentData = getContent();
 
     const product = computed(() => productGetters.getFiltered(products.value, { master: true, attributes: context.root.$route.query })[0]);
+    const productPrice = computed(() => productGetters.getPrice(product));
     // const options = computed(() => productGetters.getAttributes(products.value, ['color', 'size']));
     const configuration = computed(() => productGetters.getAttributes(product.value, ['color', 'size']));
     const categories = computed(() => productGetters.getCategoryIds(product.value));
     const options = computed(() => productGetters.getOptions(product.value));
 
     onSSR(async () => {
-      // await loadCart();
-      await search({ id });
+      await loadCart;
+      await search({ slug });
       await searchRelatedProducts({ catId: [categories.value[0]], limit: 8 });
     });
 
     const updateFilter = (filter) => {
+      // const queryParams = Object.assign(context.root.$route.query, { ...filter });
       context.root.$router.push({
         path: context.root.$route.path,
-        query: { ...configuration.value,
-          ...filter }
+        query: { ...context.root.$route.query, ...filter }
       });
     };
 
@@ -257,7 +281,9 @@ export default {
       qty,
       addToCart,
       loading,
-      productGetters
+      cart,
+      productGetters,
+      productPrice
     };
   },
   components: {
@@ -279,7 +305,8 @@ export default {
     SfBreadcrumbs,
     SfButton,
     InstagramFeed,
-    RelatedProducts
+    RelatedProducts,
+    SfBadge
   },
   data() {
     return {

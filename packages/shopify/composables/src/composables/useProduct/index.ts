@@ -3,7 +3,13 @@ import { useProductFactory, ProductsSearchResult } from '@vue-storefront/core';
 import { UseProduct, Product } from '../../types';
 
 const productsSearch = async (params): Promise<ProductsSearchResult<Product>> => {
-  console.log('AL: product trace: useComposable: productsSearch - 01', params);
+  // Make a customQuery for search product/sortBy
+  // params.customQuery = {
+  //   first: 20,
+  //   reverse: true,
+  //   sortKey: 'CREATED_AT',
+  //   collection: 'toys'
+  // };
   const searchParams = {
     ids: params.ids,
     with: params.term,
@@ -17,7 +23,11 @@ const productsSearch = async (params): Promise<ProductsSearchResult<Product>> =>
     slug: params.slug,
     customQuery: params.customQuery
   };
-  console.log('AL: product trace: useComposable: productsSearch - 02', searchParams);
+  if (params.catId) {
+    // searchParams.customQuery = {
+
+    // }
+  }
   const products = await getProduct(searchParams);
 
   return {
