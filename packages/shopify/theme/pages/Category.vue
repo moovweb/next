@@ -141,23 +141,43 @@
           tag="div"
           class="products__grid"
         >
-          <SfProductCard
+          <ProductTile
+            v-for="(product, i) in products"
+            :key="productGetters.getSlug(product)"
+            :product-key="i"
+            :product="product"
+          />
+          <!-- <SfProductCard
             data-cy="category-product-card"
             v-for="(product, i) in products"
             :key="productGetters.getSlug(product)"
             :style="{ '--index': i }"
-            :title="productGetters.getName(product)"
+            :title="productGetters.getName(product) + (productGetters.getStatus(product) ? '' : ' - Out of Stock')"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
-            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             :max-rating="5"
             :score-rating="3"
             :show-add-to-cart-button="true"
-            :isOnWishlist="false"
+            :is-on-wishlist="productGetters.isOnWishlist(product)"
+            :add-to-cart-disabled="productGetters.getStatus(product) ? false : true"
             @click:wishlist="toggleWishlist(i)"
+            @click:add-to-cart="addToCart(product, parseInt(1))"
             :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
             class="products__product-card"
-          />
+          >
+            <template slot="price">
+              <SfPrice
+                v-if="productGetters.hasSpecialPrice(product)"
+                class="sf-product-card__price"
+                :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+                :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
+              />
+              <SfPrice
+                v-else
+                class="sf-product-card__price"
+                :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
+              />
+            </template>
+          </SfProductCard> -->
         </transition-group>
         <transition-group
           v-else
@@ -171,7 +191,7 @@
             v-for="(product, i) in products"
             :key="productGetters.getSlug(product)"
             :style="{ '--index': i }"
-            :title="productGetters.getName(product)"
+            :title="productGetters.getName(product) + (productGetters.getStatus(product) ? '' : ' - Out of Stock')"
             :description="productGetters.getDescription(product)"
             :image="productGetters.getCoverImage(product)"
             :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
@@ -179,9 +199,11 @@
             :max-rating="5"
             :score-rating="3"
             :is-on-wishlist="false"
+            :add-to-cart-disabled="productGetters.getStatus(product) ? false : true"
             class="products__product-card-horizontal"
             @click:wishlist="toggleWishlist(i)"
-            :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+            @click.native="addToCart(product, parseInt(1))"
+            :link="localePath(`/products/${productGetters.getSlug(product)}`)"
           />
         </transition-group>
         <SfPagination
@@ -381,19 +403,21 @@ import {
   SfSelect,
   SfBreadcrumbs,
   SfLoader,
-  SfColor
+  SfColor,
+  SfPrice
 } from '@storefront-ui/vue';
 import { computed, ref, watch } from '@vue/composition-api';
-import { useCategory, useProduct, productGetters, categoryGetters } from '@vue-storefront/shopify';
+import { useCategory, useProduct, productGetters, categoryGetters, useCart } from '@vue-storefront/shopify';
 import { getCategorySearchParameters, getCategoryPath } from '~/helpers/category';
 import { onSSR } from '@vue-storefront/core';
+import ProductTile from '~/components/ProductTile';
 
 const perPageOptions = [20, 40, 100];
 
 const sortByOptions = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'price-up', label: 'Price from low to high' },
-  { value: 'price-down', label: 'Price from high to low' }
+  { value: 'CREATED_AT', label: 'Latest' },
+  { value: 'PRICE_UP', label: 'Price from low to high' },
+  { value: 'PRICE_DOWN', label: 'Price from high to low' }
 ];
 
 // TODO: to be implemented in https://github.com/DivanteLtd/next/issues/200
@@ -431,8 +455,7 @@ const filters = {
 
 // TODO: to be implemented in https://github.com/DivanteLtd/next/issues/211
 const breadcrumbs = [
-  { text: 'Home', route: { link: '#' } },
-  { text: 'Women', route: { link: '#' } }
+  { text: 'Home', route: { link: '#' } }
 ];
 
 function updateFilter() {}
@@ -450,20 +473,21 @@ export default {
   transition: 'fade',
   setup(props, context) {
     const { query } = context.root.$route;
-
+    const { addToCart } = useCart('cart');
     const { categories, search, loading } = useCategory('categories');
     const { totalProducts, search: productsSearch, loading: productsLoading } = useProduct('categoryProducts');
     const currentPage = ref(parseInt(query.page, 10) || 1);
     const itemsPerPage = ref(parseInt(query.items, 10) || perPageOptions[0]);
+    const sortBy = ref('CREATED_AT');
 
     onSSR(async () => {
       await search(getCategorySearchParameters(context));
-      console.log('AL: product trace: Category.vue', categories);
-      await productsSearch({
-        catId: (categories.value[0] || {}).id,
-        page: currentPage.value,
-        perPage: itemsPerPage.value
-      });
+      // await productsSearch({
+      //   catId: (categories.value[0] || {}).id,
+      //   page: currentPage.value,
+      //   perPage: itemsPerPage.value,
+      //   sort: sortBy.value
+      // });
     });
 
     watch([currentPage, itemsPerPage], () => {
@@ -471,8 +495,17 @@ export default {
         productsSearch({
           catId: categories.value[0].id,
           page: currentPage.value,
-          perPage: itemsPerPage.value
+          perPage: itemsPerPage.value,
+          sort: sortBy.value,
+          customQuery: {
+            first: 20,
+            sortKey: sortBy.value,
+            reverse: true,
+            collection: categories.value[0].handle
+            // query: ''
+          }
         });
+        breadcrumbs.push({ text: categories.value[0].title, route: { link: '#' } });
         context.root.$router.push({ query: {
           items: itemsPerPage.value !== perPageOptions[0] ? itemsPerPage.value : undefined,
           page: currentPage.value !== 1 ? currentPage.value : undefined
@@ -481,17 +514,15 @@ export default {
     });
 
     const products = computed(() => productGetters.getFiltered((categories.value[0] || {}).products, { master: true }));
-    console.log('AL: product trace: Current category product is', products);
     const categoryTree = computed(() => categoryGetters.getTree(categories.value[0]));
 
     const isCategorySelected = (slug) => slug === (categories.value && categories.value[0].slug);
 
-    const sortBy = ref('price-up');
     const isGridView = ref(true);
     const isFilterSidebarOpen = ref(false);
 
     function toggleWishlist(index) {
-      products.value[index].isOnWishlist = !this.products.value[index].isOnWishlist;
+      products.value[index].isOnWishlist = !products.value[index].isOnWishlist;
     }
 
     const goToPage = (pageNumber) => {
@@ -521,7 +552,8 @@ export default {
       clearAllFilters,
       toggleWishlist,
       isGridView,
-      goToPage
+      goToPage,
+      addToCart
     };
   },
   components: {
@@ -539,7 +571,9 @@ export default {
     SfBreadcrumbs,
     SfLoader,
     SfColor,
-    SfHeading
+    SfHeading,
+    SfPrice,
+    ProductTile
   }
 };
 </script>

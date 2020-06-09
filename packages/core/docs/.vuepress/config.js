@@ -63,7 +63,9 @@ module.exports = {
           title: 'Composables',
           collapsable: false,
           children: [
+            ['/aboutyou/use-cart', 'useCart'],
             ['/aboutyou/use-product', 'useProduct'],
+            ['/aboutyou/use-wishlist', 'useWishlist'],
           ]
         }
       ],

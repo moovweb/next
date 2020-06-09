@@ -1,4 +1,5 @@
 import { UseCategory, UseProduct } from '@vue-storefront/core';
+import { ComputedProperty } from '@vue-storefront/core';
 
 // @todo: replace with real types
 
@@ -20,7 +21,7 @@ type UserAddress = {
 
 // @todo: replace with real Cart types
 type Cart = {
-
+  id?: string;
 }
 
 type CartItem = {
@@ -53,6 +54,28 @@ type WishlistProduct = {
 
 type Wishlist = {
 
+}
+
+export interface UseSearch<SEARCH_RESULTS, SEARCH_PARAMS> {
+  search: (searchParams: SEARCH_PARAMS) => Promise<void>;
+  searchResults: ComputedProperty<SEARCH_RESULTS>;
+  loading: ComputedProperty<boolean>;
+}
+
+export interface SearchResults {
+  brands: {
+    id: number;
+    label: string;
+    value: string;
+  }[];
+  categories: Category[];
+  products: Product[];
+  suggestions: AgnosticSuggestion[];
+}
+
+export type AgnosticSuggestion = {
+  value: string;
+  [x: string]: any;
 }
 
 export {
