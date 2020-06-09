@@ -99,8 +99,32 @@ export type Cart = {
   webUrl?: Maybe<Scalars['String']>;
 }
 
+export type CartItem = {
+  __typename?: 'CartItem';
+  id: Maybe<Scalars['String']>;
+  variant?: Maybe<Scalars['Array']>;
+}
+
 export type Wishlist = {}
-export type Product = {}
+export type Product = {
+  __typename?: 'ProductVariant';
+  id: Maybe<Scalars['String']>;
+  handle: Maybe<Scalars['String']>;
+  images: Maybe<Scalars['Array']>;
+  options: Maybe<Scalars['Array']>;
+  productType: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
+  descriptionHtml: Maybe<Scalars['String']>;
+  updatedAt: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['String']>;
+  isOnWishlist: Maybe<Scalars['Boolean']>;
+  availableForSale: Maybe<Scalars['Boolean']>;
+  variants: Maybe<Scalars['Array']>;
+  vendor: Maybe<Scalars['String']>;
+  selectedVariant: Maybe<Scalars['Array']>;
+}
 export type ProductVariant = {
   __typename?: 'ProductVariant';
   id: Maybe<Scalars['String']>;
