@@ -1,4 +1,5 @@
 global.fetch = require('node-fetch');
+require('dotenv').config();
 import webpack from 'webpack';
 
 export default {
@@ -30,6 +31,7 @@ export default {
   buildModules: [
     // to core
     '@nuxt/typescript-build',
+    '@nuxtjs/dotenv',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
