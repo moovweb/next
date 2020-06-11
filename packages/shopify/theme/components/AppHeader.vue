@@ -1,6 +1,6 @@
 <template>
   <SfHeader
-    data-sp="app-header"
+    data-cy="app-header"
     active-sidebar="activeSidebar"
     @click:cart="toggleCartSidebar"
     @click:wishlist="toggleWishlistSidebar"
@@ -8,21 +8,25 @@
     @change:search="onSearchQueryChanged"
     :search-value="searchQuery"
     :cartItemsQty="cartTotalItems"
+    :accountIcon="accountIcon"
     class="sf-header--has-mobile-search"
-    >
+  >
     <!-- TODO: add mobile view buttons after SFUI team PR -->
     <template #logo>
-      <nuxt-link :to="localePath('/')" class="sf-header__logo">
+      <nuxt-link data-cy="app-header-url_logo" :to="localePath('/')" class="sf-header__logo">
         <SfImage src="/icons/logo.svg" alt="Vue Storefront Next" class="sf-header__logo-image"/>
       </nuxt-link>
     </template>
     <template #navigation>
-      <SfHeaderNavigationItem v-for="category in categories" :key="category.id">
+      <SfHeaderNavigationItem :data-cy="'app-header-url_' + category.handle" v-for="category in categories" :key="category.id">
         <nuxt-link :to="'/c/' + category.handle">
           {{ category.title }}
         </nuxt-link>
       </SfHeaderNavigationItem>
       <search-results :visible="showSearchResults" :categories="categoriesFound" :products="productsFound"/>
+    </template>
+    <template #aside>
+      <LocaleSelector class="mobile-only" />
     </template>
   </SfHeader>
 </template>
@@ -30,10 +34,11 @@
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue';
 import uiState from '~/assets/ui-state';
-import { useCart, useUser, useCategory, cartGetters, useSearch } from '@vue-storefront/shopify';
+import { useCart, useWishlist, useUser, useCategory, useSearch, cartGetters } from '@vue-storefront/shopify';
 import { computed, ref } from '@vue/composition-api';
 import { onSSR } from '@vue-storefront/core';
 import SearchResults from './SearchResults';
+import LocaleSelector from './LocaleSelector';
 
 const { toggleCartSidebar, toggleWishlistSidebar, toggleLoginModal } = uiState;
 
@@ -41,20 +46,24 @@ export default {
   components: {
     SfHeader,
     SfImage,
-    SearchResults
+    SearchResults,
+    LocaleSelector
   },
   setup(props, context) {
     const { isAuthenticated } = useUser();
-    const onAccountClicked = () => {
-      isAuthenticated && isAuthenticated.value ? context.root.$router.push('/my-account') : toggleLoginModal();
-    };
-    const { cart } = useCart();
-    // const { loadWishlist } = useWishlist();
-    const { search: productSearch, searchResults } = useSearch();
+    const { cart, loadCart } = useCart();
+    const { loadWishlist } = useWishlist();
     const cartTotalItems = computed(() => {
       const count = cartGetters.getTotalItems(cart.value);
       return count ? count.toString() : null;
     });
+
+    const accountIcon = computed(() => isAuthenticated.value ? 'profile_fill' : 'profile');
+
+    const onAccountClicked = () => {
+      isAuthenticated && isAuthenticated.value ? context.root.$router.push('/my-account') : toggleLoginModal();
+    };
+    const { search: productSearch, searchResults } = useSearch();
     const searchQuery = ref('');
     const showSearchResults = ref(false);
     const categoriesFound = computed(() => {
@@ -71,26 +80,29 @@ export default {
         showSearchResults.value = false;
       }
     };
-
     const { categories, search } = useCategory('categories');
+
     onSSR(async () => {
       await search({ slug: '' });
-      // await loadWishlist();
+      await loadCart();
+      await loadWishlist();
     });
+
     return {
-      cartTotalItems,
-      categoriesFound,
+      accountIcon,
       productsFound,
+      categoriesFound,
       suggestionsFound,
       searchQuery,
       searchResults,
       showSearchResults,
-      toggleCartSidebar,
-      toggleLoginModal,
-      toggleWishlistSidebar,
-      onAccountClicked,
+      cartTotalItems,
       categories,
-      onSearchQueryChanged
+      toggleLoginModal,
+      onAccountClicked,
+      onSearchQueryChanged,
+      toggleCartSidebar,
+      toggleWishlistSidebar
     };
   }
 };

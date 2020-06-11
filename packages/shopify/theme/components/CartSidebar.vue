@@ -22,8 +22,8 @@
             <transition-group name="fade" tag="div">
               <SfCollectedProduct
                 data-cy="collected-product-cart-sidebar"
-                v-for="(product, i) in products"
-                :key="i"
+                v-for="product in products"
+                :key="cartGetters.getItemSku(product)"
                 :image="cartGetters.getItemImage(product)"
                 :title="cartGetters.getItemName(product)"
                 :regular-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).regular)"
@@ -111,15 +111,13 @@ export default {
   setup() {
     const { cart, removeFromCart, updateQuantity, loadCart } = useCart();
     const { isAuthenticated } = useUser();
-    console.log('Current caart from sidebar', cart.value);
     const products = computed(() => cartGetters.getItems(cart.value));
-    console.log('Caart produicts', products);
     const totals = computed(() => cartGetters.getTotals(cart.value));
     const totalItems = computed(() => cartGetters.getTotalItems(cart.value));
     const checkoutUrl = computed(() => cartGetters.getCheckoutUrl(cart.value));
 
     onSSR(async () => {
-      await loadCart;
+      await loadCart();
     });
 
     return {
