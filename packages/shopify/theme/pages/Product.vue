@@ -22,7 +22,6 @@
             }
           ]"
         /> -->
-        <!-- {{ productGetters.getGallery(product) }} -->
         <!-- <SfGallery
           :images="productGetters.getGallery(product)"
           :image-width="590"
@@ -32,7 +31,7 @@
           :enable-zoom="false"
         /> -->
         <SfImage
-          v-for="(image, i) in productGetters.getGallery(product)" :key="i"
+          v-for="(image, i) in productGetters.getGallery(product).splice(0, 2)" :key="i"
           :src="image.big"
           :width="590"
           :height="700"
@@ -50,15 +49,8 @@
           </SfBadge>
           <div class="product-details__sub">
             <SfPrice
-              v-if="productGetters.hasSpecialPrice(product)"
-              class="sf-product-card__price"
               :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
               :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
-            />
-            <SfPrice
-              v-else
-              class="sf-product-card__price"
-              :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
             />
             <div class="product-details__sub-rating">
               <SfRating :score="4" :max="5" />
@@ -235,8 +227,8 @@ import {
 
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
-import { useProduct, useCart, productGetters } from '@vue-storefront/shopify';
 import { ref, computed } from '@vue/composition-api';
+import { useProduct, useCart, productGetters } from '@vue-storefront/shopify';
 import { onSSR } from '@vue-storefront/core';
 
 export default {
@@ -245,29 +237,29 @@ export default {
   setup(props, context) {
     const qty = ref(1);
     const { slug } = context.root.$route.params;
+    console.log('Params', context.root.$route.params);
     const { products, search } = useProduct('products');
     const { products: relatedProducts, search: searchRelatedProducts, loading: relatedLoading } = useProduct('relatedProducts');
-    const { cart, addToCart, loading, loadCart } = useCart('cart');
-    // const contentData = getContent();
+    const { addToCart, loading, loadCart } = useCart();
 
     const product = computed(() => productGetters.getFiltered(products.value, { master: true, attributes: context.root.$route.query })[0]);
     const productPrice = computed(() => productGetters.getPrice(product));
-    // const options = computed(() => productGetters.getAttributes(products.value, ['color', 'size']));
+    const options = computed(() => productGetters.getOptions(product.value));
     const configuration = computed(() => productGetters.getAttributes(product.value, ['color', 'size']));
     const categories = computed(() => productGetters.getCategoryIds(product.value));
-    const options = computed(() => productGetters.getOptions(product.value));
+    const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
 
     onSSR(async () => {
-      await loadCart;
+      await loadCart();
       await search({ slug });
       await searchRelatedProducts({ catId: [categories.value[0]], limit: 8 });
     });
 
     const updateFilter = (filter) => {
-      // const queryParams = Object.assign(context.root.$route.query, { ...filter });
       context.root.$router.push({
         path: context.root.$route.path,
-        query: { ...context.root.$route.query, ...filter }
+        query: { ...configuration.value,
+          ...filter }
       });
     };
 
@@ -281,9 +273,9 @@ export default {
       qty,
       addToCart,
       loading,
-      cart,
       productGetters,
-      productPrice
+      productPrice,
+      breadcrumbs
     };
   },
   components: {
@@ -346,7 +338,7 @@ export default {
         }
       ],
       detailsIsActive: false,
-      breadcrumbs: [
+      fallbackBreadcrumbs: [
         {
           text: 'Home',
           route: {

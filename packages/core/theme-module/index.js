@@ -77,7 +77,7 @@ module.exports = async function DefaultThemeModule(moduleOptions) {
     });
     routes.push({
       name: 'product',
-      path: '/products/:slug/',
+      path: '/p/:id/:slug/',
       component: resolve(projectLocalThemeDir, 'pages/Product.vue')
     });
     routes.push({

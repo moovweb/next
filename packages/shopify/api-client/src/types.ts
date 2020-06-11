@@ -140,6 +140,7 @@ export type ProductVariant = {
   createdAt: Maybe<Scalars['String']>;
   isOnWishlist: Maybe<Scalars['Boolean']>;
   availableForSale: Maybe<Scalars['Boolean']>;
+  available?: Maybe<Scalars['Boolean']>;
   variants: Maybe<Scalars['Array']>;
   vendor: Maybe<Scalars['String']>;
   selectedVariant: Maybe<Scalars['Array']>;
@@ -238,9 +239,27 @@ export type Customer = {
 export type CustomerParams = {}
 
 export type Content = {
-
+  id: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  body: Maybe<Scalars['String']>;
 }
 
 export type ContentSearchParams = {
 
+}
+
+export type Article = {
+  id: Maybe<Scalars['ID']>;
+  title: Maybe<Scalars['String']>;
+  handle: Maybe<Scalars['String']>;
+  content: Maybe<Scalars['String']>;
+  contentHtml: Maybe<Scalars['String']>;
+  excerpt: Maybe<Scalars['String']>;
+  excerptHtml: Maybe<Scalars['String']>;
+  image: any;
+  publishedAt: Maybe<Scalars['Date']>;
+  seo: any;
+  author: any;
+  url: Maybe<Scalars['String']>;
+  tags: Maybe<Scalars['Array']>;
 }

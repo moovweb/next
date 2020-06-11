@@ -1,9 +1,9 @@
 /* istanbul ignore file */
+
 import { useCartFactory, UseCartFactoryParams } from '@vue-storefront/core';
 import { ref, Ref } from '@vue/composition-api';
 import { addToCart, removeCart, updateProductQty, cookies } from '@vue-storefront/shopify-api';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Cart, CartItem, CartParams, Product } from '@vue-storefront/shopify-api/src/types';
+import { Cart, CartItem, Product } from '@vue-storefront/shopify-api/src/types';
 import { Coupon } from '../../types';
 import loadCurrentCart from './loadCurrentCart';
 import Cookies from 'js-cookie';
@@ -18,7 +18,6 @@ const fetchCartLineItem = ({ currentCart, product }) => {
 };
 
 const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
-  cart,
   loadCart: async () => {
     Cookies.set(cookies.cartCookieName, 'Chirag');
     const cartParams = {
@@ -82,11 +81,6 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
   }
 };
 
-// const { useCart, setCart }: {
-//   useCart: () => UseCart<Cart, CartItem, Product, any>;
-//   setCart: (Cart) => void;
-// } = useCartFactory<Cart, CartItem, Product, any>(params);
-
-const { setCart, useCart } = useCartFactory<Cart, CartItem, Product, Coupon>(params);
+const {setCart, useCart } = useCartFactory<Cart, CartItem, Product, Coupon>(params);
 
 export { setCart, useCart};
