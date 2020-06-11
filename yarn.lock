@@ -2089,6 +2089,11 @@
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
 
+"@storefront-ui/shared@0.7.16":
+  version "0.7.16"
+  resolved "https://registry.yarnpkg.com/@storefront-ui/shared/-/shared-0.7.16.tgz#7229bd8b020899bc1a4c34fd34a32d9f59be3fe7"
+  integrity sha512-cYsEk63K1guTEwRPh1xQGZpCHq5370/p4T8cGvublDlQUMo0CXYhTLprB4d8FLeRUkM9wxl0sFpp5Eas8R/xUw==
+
 "@storefront-ui/shared@^0.7.10":
   version "0.7.10"
   resolved "https://registry.yarnpkg.com/@storefront-ui/shared/-/shared-0.7.10.tgz#8b3d07587b9d88bca7e447f43fa8643161c41de7"
@@ -2122,6 +2127,25 @@
     vue-fragment "^1.5.1"
     vue2-leaflet "^2.5.2"
     webpack-dev-middleware "3.7.2"
+
+"@storefront-ui/vue@^0.7.17":
+  version "0.7.17"
+  resolved "https://registry.yarnpkg.com/@storefront-ui/vue/-/vue-0.7.17.tgz#a8f87a4bdd167a67617cb1ea13a53972c9f7cd6f"
+  integrity sha512-33kHzxGF/t+gESJ8oFAfI5mghrhlyIG+jeJ/ZGKahZUnRUUjUb3tctdAQ/00XMmD99RNMy7nd2CVtlAF61OlHw==
+  dependencies:
+    "@glidejs/glide" "^3.3.0"
+    "@storefront-ui/shared" "0.7.16"
+    body-scroll-lock "^3.0.1"
+    core-js "^3.6.5"
+    hammerjs "^2.0.8"
+    leaflet "^1.5.1"
+    lozad "^1.14.0"
+    node-sass "^4.13.1"
+    sass-loader "^8.0.2"
+    simplebar-vue "^1.4.0"
+    vue-drag-drop "^1.1.4"
+    vue-fragment "^1.5.1"
+    vue2-leaflet "^2.5.2"
 
 "@storybook/addon-storysource@^5.3.18":
   version "5.3.18"
@@ -2727,9 +2751,32 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
+"@vue-storefront/commercetools-api@canary":
+  version "0.0.4-prealpha.576"
+  resolved "https://registry.yarnpkg.com/@vue-storefront/commercetools-api/-/commercetools-api-0.0.4-prealpha.576.tgz#5b3f02001f33c144263defa088c8dc8aa5c45e03"
+  integrity sha512-UvRXc5NHpGN9KVi3SLCSJ+UiigiPHv2SMtYh34KfForirNYrr7YijmNXNiYPBXbC+07wfSmZ1PFhIpeyjlBOzA==
+  dependencies:
+    "@commercetools/sdk-auth" "^3.0.1"
+    apollo-cache-inmemory "^1.6.3"
+    apollo-client "^2.6.4"
+    apollo-link "^1.2.13"
+    apollo-link-context "^1.0.19"
+    apollo-link-http "^1.5.16"
+    graphql "^14.5.8"
+    graphql-tag "^2.10.1"
+    isomorphic-fetch "^2.2.1"
+
 "@vue-storefront/core@2.0.1-prealpha.300":
   version "2.0.1-prealpha.300"
   resolved "https://registry.yarnpkg.com/@vue-storefront/core/-/core-2.0.1-prealpha.300.tgz#29ef1afa90dd1efb92ecc155b0e77f0899ec411a"
+  dependencies:
+    "@vue/composition-api" "^0.4.0"
+    vue "^2.6.11"
+
+"@vue-storefront/core@2.0.1-prealpha.568":
+  version "2.0.1-prealpha.568"
+  resolved "https://registry.yarnpkg.com/@vue-storefront/core/-/core-2.0.1-prealpha.568.tgz#c55a2eeced5324514e2eb89d3499d8a7b4551737"
+  integrity sha512-4O3YQyAzCJzhbO9O3gj6vO9YVH/onXQ52Tl0J3TIkDiX8Y6OAWhui3SfpYB2bbirWeMpgywuGsKpVwD8gu61gA==
   dependencies:
     "@vue/composition-api" "^0.4.0"
     vue "^2.6.11"
@@ -3439,11 +3486,29 @@ apollo-link-context@^1.0.19:
     apollo-link "^1.2.13"
     tslib "^1.9.3"
 
+apollo-link-error@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/apollo-link-error/-/apollo-link-error-1.1.13.tgz#c1a1bb876ffe380802c8df0506a32c33aad284cd"
+  integrity sha512-jAZOOahJU6bwSqb2ZyskEK1XdgUY9nkmeclCrW7Gddh1uasHVqmoYc4CKdb0/H0Y1J9lvaXKle2Wsw/Zx1AyUg==
+  dependencies:
+    apollo-link "^1.2.14"
+    apollo-link-http-common "^0.2.16"
+    tslib "^1.9.3"
+
 apollo-link-http-common@^0.2.15:
   version "0.2.15"
   resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.15.tgz#304e67705122bf69a9abaded4351b10bc5efd6d9"
   dependencies:
     apollo-link "^1.2.13"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+
+apollo-link-http-common@^0.2.16:
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.16.tgz#756749dafc732792c8ca0923f9a40564b7c59ecc"
+  integrity sha512-2tIhOIrnaF4UbQHf7kjeQA/EmSorB7+HyJIIrUjJOKBgnXwuexi8aMecRlqTIDWcyVXCeqLhUnztMa6bOH/jTg==
+  dependencies:
+    apollo-link "^1.2.14"
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
 
@@ -3470,6 +3535,16 @@ apollo-link@^1.0.0, apollo-link@^1.2.13, apollo-link@^1.2.3:
     ts-invariant "^0.4.0"
     tslib "^1.9.3"
     zen-observable-ts "^0.8.20"
+
+apollo-link@^1.2.14:
+  version "1.2.14"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.14.tgz#3feda4b47f9ebba7f4160bef8b977ba725b684d9"
+  integrity sha512-p67CMEFP7kOG1JZ0ZkYZwRDa369w5PIjtMjvrQd/HnIV8FRsHRqLqK+oAZQnFa1DDdZtOtHTi+aMIW6EatC2jg==
+  dependencies:
+    apollo-utilities "^1.3.0"
+    ts-invariant "^0.4.0"
+    tslib "^1.9.3"
+    zen-observable-ts "^0.8.21"
 
 apollo-utilities@1.3.3, apollo-utilities@^1.0.1, apollo-utilities@^1.3.0, apollo-utilities@^1.3.3:
   version "1.3.3"
@@ -9007,6 +9082,11 @@ lowlight@~1.11.0:
     fault "^1.0.2"
     highlight.js "~9.13.0"
 
+lozad@^1.14.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/lozad/-/lozad-1.15.0.tgz#cdab34e0e00eaecd3972129880560f5885a1a7bf"
+  integrity sha512-P60iyIiud4XSH5SXxrgPCXoebEaT6SYAvRBgeMBZPYmWVRSfOhQks8ZmyZ/WFgDgwvrHnWffXw9HMg8G0gvt0w==
+
 lozad@^1.9.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/lozad/-/lozad-1.14.0.tgz#91d51d57e53187e95c5b7f4029d7a28a0e940e10"
@@ -9718,6 +9798,29 @@ node-sass@^4.12.0:
     npmlog "^4.0.0"
     request "^2.88.0"
     sass-graph "^2.2.4"
+    stdout-stream "^1.4.0"
+    "true-case-path" "^1.0.2"
+
+node-sass@^4.13.1:
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.14.1.tgz#99c87ec2efb7047ed638fb4c9db7f3a42e2217b5"
+  integrity sha512-sjCuOlvGyCJS40R8BscF5vhVlQjNN069NtQ1gSxyK1u9iqvn6tf7O1R4GNowVZfiZUCRt5MmMs1xd+4V/7Yr0g==
+  dependencies:
+    async-foreach "^0.1.3"
+    chalk "^1.1.1"
+    cross-spawn "^3.0.0"
+    gaze "^1.0.0"
+    get-stdin "^4.0.1"
+    glob "^7.0.3"
+    in-publish "^2.0.0"
+    lodash "^4.17.15"
+    meow "^3.7.0"
+    mkdirp "^0.5.1"
+    nan "^2.13.2"
+    node-gyp "^3.8.0"
+    npmlog "^4.0.0"
+    request "^2.88.0"
+    sass-graph "2.2.5"
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
@@ -12244,6 +12347,16 @@ sane@^4.0.3:
     minimist "^1.1.1"
     walker "~1.0.5"
 
+sass-graph@2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/sass-graph/-/sass-graph-2.2.5.tgz#a981c87446b8319d96dce0671e487879bd24c2e8"
+  integrity sha512-VFWDAHOe6mRuT4mZRd4eKE+d8Uedrk6Xnh7Sh9b4NGufQLQjOrvf/MQoOdx+0s92L89FeyUUNfU597j/3uNpag==
+  dependencies:
+    glob "^7.0.0"
+    lodash "^4.0.0"
+    scss-tokenizer "^0.2.3"
+    yargs "^13.3.2"
+
 sass-graph@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/sass-graph/-/sass-graph-2.2.4.tgz#13fbd63cd1caf0908b9fd93476ad43a51d1e0b49"
@@ -14700,7 +14813,7 @@ yargs@12.0.5:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-yargs@^13.3.0:
+yargs@^13.3.0, yargs@^13.3.2:
   version "13.3.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
   dependencies:
@@ -14766,6 +14879,14 @@ yn@3.1.1:
 zen-observable-ts@^0.8.20:
   version "0.8.20"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.20.tgz#44091e335d3fcbc97f6497e63e7f57d5b516b163"
+  dependencies:
+    tslib "^1.9.3"
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.21:
+  version "0.8.21"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.21.tgz#85d0031fbbde1eba3cd07d3ba90da241215f421d"
+  integrity sha512-Yj3yXweRc8LdRMrCC8nIc4kkjWecPAUVh0TI0OUrWXx6aX790vLcDlWca6I4vsyCGH3LpWxq0dJRcMOFoVqmeg==
   dependencies:
     tslib "^1.9.3"
     zen-observable "^0.8.0"

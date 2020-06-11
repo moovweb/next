@@ -19,15 +19,16 @@ module.exports = async function DefaultThemeModule(moduleOptions) {
 
   const baseThemeDir = path.join(__dirname, 'theme');
   const projectLocalThemeDir = this.options.buildDir.replace('.nuxt', '.theme');
-  const themeComponentsDir = path.join(this.options.rootDir, 'pages');
-  const themePagesDir = path.join(this.options.rootDir, 'components');
+  const themeComponentsDir = path.join(this.options.rootDir, 'components');
+  const themePagesDir = path.join(this.options.rootDir, 'pages');
   const themeHelpersDir = path.join(this.options.rootDir, 'helpers');
-  const themeFiles = getAllFilesFromDir(baseThemeDir).filter(file => !file.includes('/static/'));
+  const languageDir = path.join(this.options.rootDir, 'lang');
+  const themeFiles = getAllFilesFromDir(baseThemeDir).filter(file => !file.includes(path.sep + 'static' + path.sep));
 
   const compileAgnosticTemplate = (filePath) => {
     return compileTemplate(
       path.join(__dirname, filePath),
-      this.options.buildDir.split('.nuxt').pop() + '.theme/' + filePath.split('theme/').pop(),
+      this.options.buildDir.split('.nuxt').pop() + '.theme' + path.sep + filePath.split('theme' + path.sep).pop(),
       {
         apiClient: moduleOptions.apiClient,
         helpers: moduleOptions.helpers,
@@ -41,7 +42,8 @@ module.exports = async function DefaultThemeModule(moduleOptions) {
   await Promise.all([
     copyThemeFiles(themeComponentsDir),
     copyThemeFiles(themePagesDir),
-    copyThemeFiles(themeHelpersDir)
+    copyThemeFiles(themeHelpersDir),
+    copyThemeFiles(languageDir)
   ]);
 
   log.success(`Added ${themeFiles.length} theme file(s) to ${chalk.bold('.theme')} folder`);
@@ -75,7 +77,7 @@ module.exports = async function DefaultThemeModule(moduleOptions) {
     });
     routes.push({
       name: 'product',
-      path: '/p/:id/:slug/',
+      path: '/products/:slug/',
       component: resolve(projectLocalThemeDir, 'pages/Product.vue')
     });
     routes.push({

@@ -1,38 +1,42 @@
 /* istanbul ignore file */
-
+import { useCart, setCart } from './composables/useCart';
+import { useWishlist, setWishlist } from './composables/useWishlist';
 import useCategory from './composables/useCategory';
-import useProduct from './composables/useProduct';
-import useCart from './composables/useCart';
 import useCheckout from './composables/useCheckout';
-import useUser from './composables/useUser';
 import useLocale from './composables/useLocale';
+import useProduct from './composables/useProduct';
+import useSearch from './composables/useSearch';
+import { useUser, setUser } from './composables/useUser';
 import useUserOrders from './composables/useUserOrders';
-import useContent from './composables/useContent';
-import useWishlist from './composables/useWishlist';
-
 import {
   cartGetters,
-  categoryGetters,
-  checkoutGetters,
-  productGetters,
   userGetters,
-  orderGetters
+  categoryGetters,
+  productGetters,
+  checkoutGetters,
+  orderGetters,
+  wishlistGetters
 } from './composables/getters';
 
 export {
-  useCategory,
-  useProduct,
-  useCart,
-  useCheckout,
-  useUser,
-  useLocale,
-  useUserOrders,
-  useContent,
-  useWishlist,
   cartGetters,
   categoryGetters,
   checkoutGetters,
   productGetters,
-  userGetters,
-  orderGetters
+  orderGetters,
+  wishlistGetters,
+  useCart,
+  useCategory,
+  useCheckout,
+  useLocale,
+  useProduct,
+  useSearch,
+  useUser,
+  useUserOrders,
+  useWishlist,
+  setCart,
+  setWishlist,
+  setUser,
+  userGetters
 };
+
