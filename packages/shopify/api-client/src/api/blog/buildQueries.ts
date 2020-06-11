@@ -7,7 +7,7 @@ const articlesQuery: (pages: number, cursor?: string) => any = (
   return _shopifyCustomClient.graphQLClient.query((root) => {
     const args = { first: pages };
     if (cursor) {
-      args.after = cursor;
+      args['after'] = cursor;
     }
 
     root.addConnection('articles', { args: args }, (article) => {

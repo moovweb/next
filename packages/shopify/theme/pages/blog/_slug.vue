@@ -16,7 +16,8 @@ import { useArticle } from '@vue-storefront/shopify';
 
 export default {
   async asyncData ({ params }) {
-    const { blogs } = await useArticle({ slug: params.slug });
+    const { loadArticle } = useArticle();
+    const { blogs } = await loadArticle(params.slug);
     return { blog: blogs[0] }
   }
 };

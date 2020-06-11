@@ -48,8 +48,9 @@ export default {
     SfLink
   },
   async asyncData () {
-    const { articles } = await useArticle({ pages: 2 });
-    return { articles: articles };
+    const { articles } = useArticle();
+    let blogs = await articles();
+    return { articles: blogs.articles };
   }
 };
 </script>
