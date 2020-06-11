@@ -17,7 +17,7 @@ export default {
 
     const { loadPage } = useContent();
     const page = await loadPage(params.slug);
-    return { page: page }
+    return { page: page };
   }
 };
 

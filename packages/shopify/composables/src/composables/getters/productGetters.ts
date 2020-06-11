@@ -81,13 +81,13 @@ export const getProductFiltered = (products: ProductVariant[] | ProductVariant, 
     return [];
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getVariantByAttributes = (products: ProductVariant[] | ProductVariant, attributes: any): ProductVariant[] => {
+  const getVariantByAttributes = (products: ProductVariant, attributes: any): ProductVariant[] => {
     if (!products) {
       return [];
     }
     // Add default attributes
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const getDefaultOptions = (product: ProductVariant[] | ProductVariant): any => {
+    const getDefaultOptions = (product: ProductVariant): any => {
       return product.options.map((pOption) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const pOptionName = pOption.name;
@@ -120,7 +120,7 @@ export const getProductFiltered = (products: ProductVariant[] | ProductVariant, 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductAttributes = (products: ProductVariant[] | ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {
-  return { value: null };
+  return {};
 };
 
 export const getProductOptions = (product: ProductVariant): Record<string, AgnosticAttribute | string> => {

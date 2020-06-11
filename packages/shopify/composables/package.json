@@ -7,7 +7,7 @@
   "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rimraf lib && rollup -c",
+    "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "jest"
   },
@@ -15,12 +15,7 @@
     "@vue-storefront/shopify-api": "^0.0.1",
     "@vue-storefront/core": "^2.0.0",
     "@vue/composition-api": "^0.3.4",
-    "js-cookie": "^2.2.1",
-    "vue": "^2.6.x"
-  },
-  "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.30",
-    "vue-template-compiler": "^2.6.x"
+    "js-cookie": "^2.2.1"
   },
   "files": [
     "lib/**/*"

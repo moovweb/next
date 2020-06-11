@@ -45,11 +45,11 @@ export default {
   components: {
     SfPagination,
     SfIcon,
-    SfLink,
+    SfLink
   },
-  async asyncData ({ params }) {
+  async asyncData () {
     const { articles } = await useArticle({ pages: 2 });
-    return { articles: articles }
+    return { articles: articles };
   }
 };
 </script>
