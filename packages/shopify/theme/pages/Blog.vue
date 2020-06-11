@@ -47,6 +47,11 @@ export default {
     SfIcon,
     SfLink
   },
+  head () {
+    return {
+      title: 'Blogs'
+    }
+  },
   async asyncData () {
     const { articles } = useArticle();
     let blogs = await articles();
