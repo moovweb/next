@@ -25,6 +25,11 @@ export default {
     const { pages } = useContent();
     let result = await pages();
     return { pages: result.pages.edges }
+  },
+  head () {
+    return {
+      title: 'Cms Pages'
+    }
   }
 };
 

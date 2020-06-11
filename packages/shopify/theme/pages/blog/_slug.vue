@@ -18,7 +18,12 @@ export default {
   async asyncData ({ params }) {
     const { loadArticle } = useArticle();
     const { blogs } = await loadArticle(params.slug);
-    return { blog: blogs[0] }
+    return { blog: blogs[0], title: blogs[0].articleByHandle.title }
+  },
+  head () {
+    return {
+      title: this.title
+    }
   }
 };
 
