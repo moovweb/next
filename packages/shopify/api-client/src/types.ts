@@ -68,9 +68,63 @@ export type Scalars = {
   Time: any;
 };
 
-export type Cart = {}
+export type Cart = {
+  __typename?: 'Cart';
+  appliedGiftCards: Maybe<Scalars['Array']>;
+  completedAt: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['String']>;
+  currencyCode: Maybe<Scalars['String']>;
+  customAttributes: Maybe<Scalars['Array']>;
+  discountApplications: Maybe<Scalars['Array']>;
+  email: Maybe<Scalars['String']>;
+  errors: Maybe<Scalars['Json']>;
+  id: Maybe<Scalars['String']>;
+  lineItems?: Maybe<Scalars['Array']>;
+  lineItemsSubtotalPrice?: Maybe<Scalars['Json']>;
+  note?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['String']>;
+  orderStatusUrl?: Maybe<Scalars['String']>;
+  paymentDue?: Maybe<Scalars['String']>;
+  ready?: Maybe<Scalars['String']>;
+  requiresShipping?: Maybe<Scalars['String']>;
+  shippingAddress?: Maybe<Scalars['Json']>;
+  shippingLine?: Maybe<Scalars['String']>;
+  subtotalPrice?: Maybe<Scalars['String']>;
+  taxExempt?: Maybe<Scalars['String']>;
+  taxesIncluded?: Maybe<Scalars['String']>;
+  totalPrice?: Maybe<Scalars['String']>;
+  totalTax?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
+  userErrors?: Maybe<Scalars['Array']>;
+  webUrl?: Maybe<Scalars['String']>;
+}
+
+export type CartItem = {
+  __typename?: 'CartItem';
+  id: Maybe<Scalars['String']>;
+  variant?: Maybe<Scalars['Array']>;
+}
+
 export type Wishlist = {}
-export type Product = {}
+export type Product = {
+  __typename?: 'ProductVariant';
+  id: Maybe<Scalars['String']>;
+  handle: Maybe<Scalars['String']>;
+  images: Maybe<Scalars['Array']>;
+  options: Maybe<Scalars['Array']>;
+  productType: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
+  descriptionHtml: Maybe<Scalars['String']>;
+  updatedAt: Maybe<Scalars['String']>;
+  createdAt: Maybe<Scalars['String']>;
+  isOnWishlist: Maybe<Scalars['Boolean']>;
+  availableForSale: Maybe<Scalars['Boolean']>;
+  variants: Maybe<Scalars['Array']>;
+  vendor: Maybe<Scalars['String']>;
+  selectedVariant: Maybe<Scalars['Array']>;
+}
 export type ProductVariant = {
   __typename?: 'ProductVariant';
   id: Maybe<Scalars['String']>;
@@ -84,9 +138,11 @@ export type ProductVariant = {
   descriptionHtml: Maybe<Scalars['String']>;
   updatedAt: Maybe<Scalars['String']>;
   createdAt: Maybe<Scalars['String']>;
+  isOnWishlist: Maybe<Scalars['Boolean']>;
   availableForSale: Maybe<Scalars['Boolean']>;
   variants: Maybe<Scalars['Array']>;
   vendor: Maybe<Scalars['String']>;
+  selectedVariant: Maybe<Scalars['Array']>;
 }
 export type ProductParams = {
   type: Scalars['String'];
@@ -104,7 +160,38 @@ export type Category = {
 }
 export type CategoryFilter = {}
 export type ShippingMethod = {}
-export type LineItem = {};
+export type LineItem = {
+  __typename?: 'LineItem';
+  customAttributes: Maybe<Scalars['Array']>;
+  discountAllocations: Maybe<Scalars['Array']>;
+  hasNextPage: Maybe<Scalars['String']>;
+  hasPreviousPage: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  quantity: Maybe<Scalars['Int']>;
+  title: Maybe<Scalars['String']>;
+  // variableValues: Maybe<Scalars['Json']>;
+  variableValues: {
+    checkoutId: Maybe<Scalars['String']>;
+    lineItems: Maybe<Scalars['Array']>;
+  };
+  variant: {
+    available: Maybe<Scalars['String']>;
+    compareAtPrice: Maybe<Scalars['String']>;
+    id: Maybe<Scalars['String']>;
+    image: {
+      altText: Maybe<Scalars['String']>;
+      id: Maybe<Scalars['String']>;
+      src: Maybe<Scalars['String']>;
+    };
+    price: Maybe<Scalars['String']>;
+    product: Maybe<Scalars['Json']>;
+    sku: Maybe<Scalars['String']>;
+    title: Maybe<Scalars['String']>;
+    unitPrice: Maybe<Scalars['String']>;
+    weight: Maybe<Scalars['String']>;
+    selectedOptions?: Maybe<Scalars['Array']>;
+  };
+};
 export type CategorySearchParams = {
   id: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
@@ -131,15 +218,16 @@ export type ShopSearchParams = {
   withPolicy: Maybe<Scalars['Boolean']>;
 }
 export type CartParams = {
-  checkoutId: Maybe<Scalars['String']>;
-  email: Maybe<Scalars['String']>;
-  lineItems: Maybe<Scalars['Json']>;
-  lineItemIds: Maybe<Scalars['Array']>;
-  input: Maybe<Scalars['Json']>;
-  discountCode: Maybe<Scalars['String']>;
-  appliedGiftCardId: Maybe<Scalars['String']>;
-  giftCardCodes: Maybe<Scalars['Array']>;
-  shippingAddress: Maybe<Scalars['Json']>;
+  id: Maybe<Scalars['String']>;
+  // checkoutId: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  lineItems?: Maybe<Scalars['Json']>;
+  lineItemIds?: Maybe<Scalars['Array']>;
+  input?: Maybe<Scalars['Json']>;
+  discountCode?: Maybe<Scalars['String']>;
+  appliedGiftCardId?: Maybe<Scalars['String']>;
+  giftCardCodes?: Maybe<Scalars['Array']>;
+  shippingAddress?: Maybe<Scalars['Json']>;
 }
 
 export type Customer = {
@@ -148,3 +236,11 @@ export type Customer = {
 }
 
 export type CustomerParams = {}
+
+export type Content = {
+
+}
+
+export type ContentSearchParams = {
+
+}

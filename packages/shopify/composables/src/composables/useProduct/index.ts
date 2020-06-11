@@ -1,9 +1,20 @@
 import { getProduct } from '@vue-storefront/shopify-api';
-import { useProductFactory, ProductsSearchResult } from '@vue-storefront/core';
+import { useProductFactory, ProductsSearchResult, AgnosticSortByOption } from '@vue-storefront/core';
 import { UseProduct, Product } from '../../types';
 
-const productsSearch = async (params): Promise<ProductsSearchResult<Product>> => {
-  console.log('AL: product trace: useComposable: productsSearch - 01', params);
+const availableSortingOptions = [
+  { value: 'price-asc', label: 'Price from low to high' },
+  { value: 'price-desc', label: 'Price from high to low' }
+];
+
+const productsSearch = async (params): Promise<ProductsSearchResult<Product, any, AgnosticSortByOption[]>> => {
+  // Make a customQuery for search product/sortBy
+  // params.customQuery = {
+  //   first: 20,
+  //   reverse: true,
+  //   sortKey: 'CREATED_AT',
+  //   collection: 'toys'
+  // };
   const searchParams = {
     ids: params.ids,
     with: params.term,
@@ -17,16 +28,21 @@ const productsSearch = async (params): Promise<ProductsSearchResult<Product>> =>
     slug: params.slug,
     customQuery: params.customQuery
   };
-  console.log('AL: product trace: useComposable: productsSearch - 02', searchParams);
+  if (params.catId) {
+    // searchParams.customQuery = {
+
+    // }
+  }
   const products = await getProduct(searchParams);
 
   return {
     data: products,
-    total: products.length
+    total: products.length,
+    availableSortingOptions
   };
 };
 
-const useProduct: (cacheId: string) => UseProduct<Product> = useProductFactory<Product, any>({
+const useProduct: (cacheId: string) => UseProduct<Product, any, AgnosticSortByOption[]> = useProductFactory<Product, any, any, AgnosticSortByOption[]>({
   productsSearch
 });
 

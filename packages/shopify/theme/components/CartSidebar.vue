@@ -22,8 +22,8 @@
             <transition-group name="fade" tag="div">
               <SfCollectedProduct
                 data-cy="collected-product-cart-sidebar"
-                v-for="product in products"
-                :key="cartGetters.getItemSku(product)"
+                v-for="(product, i) in products"
+                :key="i"
                 :image="cartGetters.getItemImage(product)"
                 :title="cartGetters.getItemName(product)"
                 :regular-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).regular)"
@@ -36,15 +36,15 @@
                 @click:remove="removeFromCart(product)"
                 class="collected-product"
               >
-               <template #configuration>
-                <div class="collected-product__properties">
-                  <SfProperty name="Size" :value="cartGetters.getItemAttributes(product).size"/>
-                  <SfProperty name="Color" :value="cartGetters.getItemAttributes(product).color"/>
-                </div>
-              </template>
-              <template #actions>
+                <template #configuration>
+                  <div class="collected-product__properties">
+                    <SfProperty v-for="(attributeVal, attributeName) in cartGetters.getItemAttributes(product)" :key="attributeVal" :name="attributeName" :value="attributeVal"/>
+
+                  </div>
+                </template>
+                <!-- <template #actions>
                   <SfButton data-cy="cart-sidebar-btn_save-later" class="sf-button--text desktop-only">Save for later</SfButton>
-              </template>
+                </template> -->
               </SfCollectedProduct>
             </transition-group>
           </div>
@@ -57,9 +57,12 @@
               <SfPrice :regular="cartGetters.getFormattedPrice(totals.subtotal)" />
             </template>
           </SfProperty>
-          <nuxt-link :to="`/checkout/${isAuthenticated ? 'shipping' : 'personal-details'}`">
+          <!-- <nuxt-link :to="`/checkout/${isAuthenticated ? 'shipping' : 'personal-details'}`">
             <SfButton data-cy="cart-sidebar-btn_checkout" @click="toggleCartSidebar" class="sf-button--full-width color-secondary">Go to checkout</SfButton>
-          </nuxt-link>
+          </nuxt-link> -->
+          <a :href="checkoutUrl">
+            <SfButton data-cy="cart-sidebar-btn_checkout" @click="toggleCartSidebar" class="sf-button--full-width color-secondary">Go to checkout</SfButton>
+          </a>
           </div>
         </div>
         <div v-else class="empty-cart" key="empty-cart">
@@ -106,14 +109,17 @@ export default {
     SfCollectedProduct
   },
   setup() {
-    const { cart, removeFromCart, updateQuantity } = useCart();
+    const { cart, removeFromCart, updateQuantity, loadCart } = useCart();
     const { isAuthenticated } = useUser();
+    console.log('Current caart from sidebar', cart.value);
     const products = computed(() => cartGetters.getItems(cart.value));
+    console.log('Caart produicts', products);
     const totals = computed(() => cartGetters.getTotals(cart.value));
     const totalItems = computed(() => cartGetters.getTotalItems(cart.value));
+    const checkoutUrl = computed(() => cartGetters.getCheckoutUrl(cart.value));
 
     onSSR(async () => {
-      // await loadCart();
+      await loadCart;
     });
 
     return {
@@ -125,7 +131,8 @@ export default {
       toggleCartSidebar,
       totals,
       totalItems,
-      cartGetters
+      cartGetters,
+      checkoutUrl
     };
   }
 };
