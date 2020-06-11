@@ -8,13 +8,6 @@ const availableSortingOptions = [
 ];
 
 const productsSearch = async (params): Promise<ProductsSearchResult<Product, any, AgnosticSortByOption[]>> => {
-  // Make a customQuery for search product/sortBy
-  // params.customQuery = {
-  //   first: 20,
-  //   reverse: true,
-  //   sortKey: 'CREATED_AT',
-  //   collection: 'toys'
-  // };
   const searchParams = {
     ids: params.ids,
     with: params.term,
@@ -28,11 +21,7 @@ const productsSearch = async (params): Promise<ProductsSearchResult<Product, any
     slug: params.slug,
     customQuery: params.customQuery
   };
-  if (params.catId) {
-    // searchParams.customQuery = {
 
-    // }
-  }
   const products = await getProduct(searchParams);
 
   return {

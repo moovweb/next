@@ -24,13 +24,9 @@ const params: UseUserFactoryParams<User, any, any> = {
     return {};
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  logIn: async ({ username, password }): Promise<User> => {
+  logIn: async ({ username, password }) => {
     // @todo
-    const user = {
-      firstName: 'Aureate',
-      lastName: 'labs'
-    };
-    return user;
+    return {};
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changePassword: async function changePassword({currentUser, currentPassword, newPassword}) {

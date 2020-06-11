@@ -1,6 +1,6 @@
 # theme
 
-> shopify theme
+> Boilerplate theme
 
 ## Build Setup
 

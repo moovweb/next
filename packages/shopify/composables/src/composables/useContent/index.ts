@@ -1,20 +1,19 @@
 import { getContent } from '@vue-storefront/shopify-api';
-import { Content } from "@vue-storefront/shopify-api/src/types";
+import { Content } from '@vue-storefront/shopify-api/src/types';
 
 interface UseContent<CONTENT, CONTENT_PARAMS> {
-    pages: () => Promise<CONTENT[]>,
-    loadPage: (handle: string) => Promise<CONTENT>
+  pages: () => Promise<CONTENT[]>;
+  loadPage: (handle: string) => Promise<CONTENT>;
 }
 
-const params : UseContent<Content, any> = {
+const params: UseContent<Content, any> = {
+  pages: async () => {
+    return await getContent.fetchAll();
+  },
 
-    pages: async () => {
-        return await getContent.fetchAll();
-    },
-
-    loadPage: async (handle) => {
-        return await getContent.fetchByHandle({ slug: handle });
-    }
+  loadPage: async (handle) => {
+    return await getContent.fetchByHandle({ slug: handle });
+  }
 };
 
 const useContent: () => UseContent<Content, any> = () => params;

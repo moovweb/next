@@ -17,7 +17,7 @@
       @click:add-to-cart="addToCart(product, parseInt(1))"
       :link="
         localePath(
-          `/products/${productGetters.getSlug(product)}`
+          `/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`
         )
       "
       class="products__product-card"

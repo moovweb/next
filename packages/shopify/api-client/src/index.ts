@@ -3,6 +3,8 @@ import getProduct from './api/product';
 import { getCart, createCart, addToCart, updateProductQty, removeCart } from './api/checkout/cart';
 import getShop from './api/shop';
 import getCustomer from './api/customer';
+import getContent from './api/content';
+import getArticle from './api/blog';
 import { apiClientFactory } from '@vue-storefront/core';
 import { ApiClientMethods, ApiClientSettings } from './types';
 import Client from 'shopify-buy';
@@ -39,6 +41,8 @@ export {
   removeCart,
   getShop,
   getCustomer,
+  getContent,
+  getArticle,
   _shopifyClient,
   _shopifyCustomClient,
   override,
