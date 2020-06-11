@@ -37,6 +37,7 @@
     "test:ct": "yarn test:ct:api-client && yarn test:ct:composables",
     "start:ayc": "cd packages/about-you/theme && yarn start",
     "start:ct": "cd packages/commercetools/theme && yarn start",
+    "start:sp": "cd packages/shopify/theme && yarn start",
     "dev:ayc:api-client": "cd packages/about-you/api-client && yarn dev",
     "dev:ayc:composables": "cd packages/about-you/composables && yarn dev",
     "dev:ct:api-client": "cd packages/commercetools/api-client && yarn dev",

@@ -32,6 +32,7 @@ export default {
     // to core
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
+    '@nuxtjs/pwa',
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
