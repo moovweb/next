@@ -5,7 +5,7 @@ const articlesQuery: (pages: number, cursor?: string) => any = (
   cursor = ''
 ): any => {
   return _shopifyCustomClient.graphQLClient.query((root) => {
-    const args = { first: pages };
+    const args = { first: pages, after: '' };
     if (cursor) {
       args.after = cursor;
     }
