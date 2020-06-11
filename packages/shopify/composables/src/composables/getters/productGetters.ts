@@ -29,7 +29,7 @@ export const getProductSlug = (product: ProductVariant): string => {
 
 export const selectedVariant = (product: ProductVariant): any => {
   let defaultVariant = product;
-  if (product.variants && product.variants.length > 0) {
+  if (product && (product.variants && product.variants.length > 0)) {
     defaultVariant = product.variants[0];
     // defaultVariant.
   }
@@ -140,13 +140,34 @@ export const getProductId = (product: ProductVariant): string => (product as any
 export const getFormattedPrice = (price: number): string => price ? `₹ ${price}` : '';
 
 export const getProductStatus = (product: ProductVariant): boolean => {
-  if (product.availableForSale || product.available) {
+  console.log('getProductStatus', product);
+  if (product && (product.availableForSale || product.available)) {
     return true;
   }
   return false;
 };
 
 export const checkForWishlist = (product: ProductVariant): boolean => (product as any).isOnWishlist ?? false;
+
+export const getBreadcrumbs = (product: ProductVariant): any => {
+  const breadCrumbs = [
+    {
+      text: 'Home',
+      route: {
+        link: '/'
+      }
+    }
+  ];
+  if (product && product.title) {
+    breadCrumbs.push({
+      text: getProductName(product),
+      route: {
+        link: '#'
+      }
+    });
+  }
+  return breadCrumbs;
+};
 
 const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getName: getProductName,
@@ -163,7 +184,8 @@ const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getFormattedPrice: getFormattedPrice,
   getStatus: getProductStatus,
   hasSpecialPrice: checkSpecialPrice,
-  isOnWishlist: checkForWishlist
+  isOnWishlist: checkForWishlist,
+  getBreadcrumbs: getBreadcrumbs
 };
 
 export default productGetters;

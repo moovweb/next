@@ -352,7 +352,7 @@ export default {
         first: 20,
         sortKey: sortBy.value,
         reverse: true,
-        collection: categories.value[0].handle
+        collection: (categories.value[0] || {}).handle
         // query: ''
       }
     }));

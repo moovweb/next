@@ -1,5 +1,5 @@
 <template>
-  <div id="product">
+  <div id="product" v-if="product">
     <SfBreadcrumbs
       class="breadcrumbs desktop-only"
       :breadcrumbs="breadcrumbs"
@@ -31,7 +31,7 @@
           :enable-zoom="false"
         /> -->
         <SfImage
-          v-for="(image, i) in productGetters.getGallery(product).splice(0, 2)" :key="i"
+          v-for="(image, i) in productGetters.getGallery(product)" :key="i"
           :src="image.big"
           :width="590"
           :height="700"
