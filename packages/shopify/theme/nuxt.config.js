@@ -70,6 +70,50 @@ export default {
       })
     ]
   },
+  pwa: {
+    manifest: {
+      name: 'VSF Next: Shopify APP',
+      lang: 'en',
+      shortName: 'VSF Next',
+      startUrl: '/',
+      display: 'standalone',
+      backgroundColor: '#fff',
+      themeColor: '#5ece7b',
+      description: 'This is the Shopify PWA app for VSF Next',
+      icons: [
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '48X48',
+          type: 'image/png'
+        },
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '72X72',
+          type: 'image/png'
+        },
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '96X96',
+          type: 'image/png'
+        },
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '144X144',
+          type: 'image/png'
+        },
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '168X168',
+          type: 'image/png'
+        },
+        {
+          src: 'images/touch/homescreen48.png',
+          sizes: '192X192',
+          type: 'image/png'
+        }
+      ]
+    }
+  },
   i18n: {
     locales: ['en'],
     defaultLocale: 'en',
