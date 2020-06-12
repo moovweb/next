@@ -82,33 +82,38 @@ export default {
       description: 'This is the Shopify PWA app for VSF Next',
       icons: [
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-48x48.png',
           sizes: '48X48',
           type: 'image/png'
         },
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-72x72.png',
           sizes: '72X72',
           type: 'image/png'
         },
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-96x96.png',
           sizes: '96X96',
           type: 'image/png'
         },
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-144x144.png',
           sizes: '144X144',
           type: 'image/png'
         },
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-168x168.png',
           sizes: '168X168',
           type: 'image/png'
         },
         {
-          src: 'images/touch/homescreen48.png',
+          src: './static/icons/android-icon-192x192.png',
           sizes: '192X192',
+          type: 'image/png'
+        },
+        {
+          src: './static/icons/android-icon-512x512.png',
+          sizes: '512X512',
           type: 'image/png'
         }
       ]
