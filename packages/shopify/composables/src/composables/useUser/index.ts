@@ -20,7 +20,8 @@ const params: UseUserFactoryParams<User, any, any> = {
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateUser: async ({currentUser, updatedUserData}): Promise<User> => {
-    let result = await getCustomer.editProfile(currentUser, {
+    let token = Cookies.get('token');
+    let result = await getCustomer.editProfile(token, {
       email: updatedUserData.email,
       firstName: updatedUserData.firstName,
       lastName: updatedUserData.lastName
@@ -35,21 +36,27 @@ const params: UseUserFactoryParams<User, any, any> = {
       lastName: lastName,
       password: password
     });
-    return {};
+    const response : User = {
+      error : (result['customerCreate'].customerUserErrors.length) ? result['customerCreate'].customerUserErrors[0].message : ''
+    };
+    return response;
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   logIn: async ({ username, password }) => {
     let result = await getCustomer.signIn(username, password);
     const response : User = {
       token : result['customerAccessTokenCreate'].customerAccessToken.accessToken,
-      error : (result['customerAccessTokenCreate'].customerUserErrors.length) ? result['customerAccessTokenCreate'].customerUserErrors[0].message : 'No error found'
+      error : (result['customerAccessTokenCreate'].customerUserErrors.length) ? result['customerAccessTokenCreate'].customerUserErrors[0].message : ''
     };
     Cookies.set('token', response.token);
     return response;
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changePassword: async function changePassword({currentUser, currentPassword, newPassword}) {
-    let result = await getCustomer.changePassword(currentUser, newPassword);
+    let token = Cookies.get('token');
+    let result = await getCustomer.changePassword(token, newPassword);
+    token = result['customerUpdate'].customerAccessToken.accessToken;
+    Cookies.set('token', token);
     return {};
   }
 };

@@ -179,10 +179,10 @@ export default {
 
     const handleForm = (fn) => async () => {
       await fn(form.value);
-      if (user.value.token) {
-        toggleLoginModal();
-      } else {
+      if (user.value.error) {
         alert(user.value.error);
+      } else {
+        toggleLoginModal();
       }
     };
 
