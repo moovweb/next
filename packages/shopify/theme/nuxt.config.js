@@ -54,7 +54,8 @@ export default {
   modules: [
     'nuxt-i18n',
     'cookie-universal-nuxt',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+    '@nuxtjs/robots'
   ],
   build: {
     transpile: [
@@ -69,6 +70,10 @@ export default {
         })
       })
     ]
+  },
+  robots: {
+    UserAgent: '*',
+    Disallow: '/'
   },
   pwa: {
     manifest: {

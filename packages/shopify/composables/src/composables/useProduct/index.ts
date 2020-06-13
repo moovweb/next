@@ -3,10 +3,10 @@ import { useProductFactory, ProductsSearchResult, AgnosticSortByOption } from '@
 import { UseProduct, Product } from '../../types';
 
 const availableSortingOptions = [
-  { value: 'created_at', label: 'Latest' },
+  { value: 'createdAt', label: 'Latest' },
   { value: 'price-asc', label: 'Price from low to high' },
   { value: 'price-desc', label: 'Price from high to low' },
-  { value: 'best_selling', label: 'Best selling' }
+  { value: 'bestSelling', label: 'Best selling' }
 ];
 
 const productsSearch = async (params): Promise<ProductsSearchResult<Product, any, AgnosticSortByOption[]>> => {
