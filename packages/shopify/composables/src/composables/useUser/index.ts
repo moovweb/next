@@ -10,7 +10,7 @@ const params: UseUserFactoryParams<User, any, any> = {
   loadUser: async () => {
     let token = Cookies.get('token');
     let result :any = await getCustomer.fetch(token);
-    const response : User = result.customer;
+    const response : User = {};
     return response;
   },
   logOut: async () => {
