@@ -419,7 +419,8 @@ export default {
       toggleWishlist,
       addToCart,
       isOnCart,
-      isGridView
+      isGridView,
+      category: categories.value[0]
     };
   },
   components: {
@@ -441,6 +442,11 @@ export default {
     Filters,
     SfPrice,
     ProductTile
+  },
+  head () {
+    return {
+      title: this.category.title + ' : Shopify PWA'
+    }
   }
 };
 </script>

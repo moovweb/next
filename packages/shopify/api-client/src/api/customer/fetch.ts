@@ -4,7 +4,7 @@ import { customerQuery as query } from "./buildQueries";
 const fetch = async (token): Promise<void> => {
 
     return await _shopifyCustomClient.graphQLClient
-        .send(query)
+        .send(query(token))
         .then(({ model }) => {
             return model;
         });

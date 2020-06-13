@@ -237,7 +237,7 @@ export default {
   setup(props, context) {
     const qty = ref(1);
     const { slug } = context.root.$route.params;
-    console.log('Params', context.root.$route.params);
+
     const { products, search } = useProduct('products');
     const { products: relatedProducts, search: searchRelatedProducts, loading: relatedLoading } = useProduct('relatedProducts');
     const { addToCart, loading, loadCart } = useCart();
@@ -359,6 +359,11 @@ export default {
         }
       ]
     };
+  },
+  head () {
+    return {
+      title: productGetters.getName(this.product) + ' : Shopify PWA'
+    }
   }
 };
 </script>

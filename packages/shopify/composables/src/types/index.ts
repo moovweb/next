@@ -12,8 +12,14 @@ type Category = {
 }
 
 type User = {
+  id?: string;
   firstName?: string;
   lastName?: string;
+  email?: string;
+  phone?: string;
+  displayName?: string;
+  token?: string;
+  error?: string;
 }
 
 type UserAddress = {
