@@ -1,24 +1,35 @@
 /* istanbul ignore file */
 
-import { UseLocale, AgnosticCountry, AgnosticCurrency, AgnosticLocale, useLocaleFactory, UseLocaleFactoryParams } from '@vue-storefront/core';
-import { cookies } from '@vue-storefront/shopify-api';
-import Cookies from 'js-cookie';
+import { getCurrentInstance, ref } from '@vue/composition-api';
 
-const params: UseLocaleFactoryParams = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setLocale: (locale: AgnosticLocale) => new Promise<AgnosticLocale>(() => {}),
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setCountry: (country: AgnosticCountry) => new Promise<AgnosticCountry>(() => {}),
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setCurrency: (currency: AgnosticCurrency) => new Promise<AgnosticCurrency>(() => {
-    console.log('Cookie trace: Set currencty method call');
-    Cookies.set(cookies.cartCookieName, 'Aureate labs');
-  }),
-  loadAvailableLocales: () => new Promise<AgnosticLocale[]>(() => {}),
-  loadAvailableCountries: () => new Promise<AgnosticCountry[]>(() => {}),
-  loadAvailableCurrencies: () => new Promise<AgnosticCurrency[]>(() => {})
+const useLocale = () => {
+  const vm = getCurrentInstance() as any;
+  const {
+    locales: availableLocales,
+    locale: defaultLocale,
+    setLocaleCookie,
+    setLocale: setLocaleI18n
+  } = vm.$i18n;
+
+  const availableCountries = availableLocales.map((locale) => locale.country);
+  const availableCurrencies = availableLocales.map((locale) => locale.currency);
+  const currentLocale = availableLocales.find((locale) => locale.code === defaultLocale);
+  const currency = currentLocale.currency;
+  const country = currentLocale.country;
+
+  const setCookie = (name) => setLocaleCookie(name);
+  const setLocale = (name) => setLocaleI18n(name);
+
+  return {
+    availableLocales,
+    availableCountries,
+    availableCurrencies,
+    locale: ref(currentLocale.name),
+    currency,
+    country,
+    setCookie,
+    setLocale
+  };
 };
-
-const useLocale: () => UseLocale = useLocaleFactory(params);
 
 export default useLocale;

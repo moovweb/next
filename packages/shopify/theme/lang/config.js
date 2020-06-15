@@ -13,21 +13,6 @@ const locales = [
       name: 'USD',
       label: 'Dollar'
     }
-  },
-  {
-    code: 'de',
-    file: 'de.js',
-    name: 'de',
-    label: 'German',
-    shopId: 121,
-    country: {
-      name: 'DE',
-      label: 'Germany'
-    },
-    currency: {
-      name: 'EUR',
-      label: 'Euro'
-    }
   }
 ];
 

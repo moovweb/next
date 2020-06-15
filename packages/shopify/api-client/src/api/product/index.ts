@@ -11,6 +11,29 @@ async function getProduct(options: ProductSearchParams): Promise<Product[]> {
     return settings.overrides.getProduct(options);
   }
 
+  // Replace sort by keys with shopify keys
+  const shopifySortKeys = {
+    vendor: 'VENDOR',
+    createdAt: 'CREATED_AT',
+    id: 'ID',
+    price: 'PRICE',
+    productType: 'PRODUCT_TYPE',
+    title: 'TITLE',
+    updatedAt: 'UPDATED_AT',
+    bestSelling: 'BEST_SELLING'
+  };
+
+  if (options.customQuery && options.customQuery.sortKey) {
+    if (shopifySortKeys[options.customQuery.sortKey]) {
+      options.customQuery.sortKey = shopifySortKeys[options.customQuery.sortKey];
+    } else if (options.customQuery.sortKey === 'price-asc' || options.customQuery.sortKey === 'price-desc') {
+      options.customQuery.sortKey = shopifySortKeys.price;
+      if (options.customQuery.sortKey === 'price-desc') {
+        options.customQuery.reverse = false;
+      }
+    }
+  }
+
   if (options.slug === '/') {
     delete options.slug;
   }

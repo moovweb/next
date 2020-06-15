@@ -1,6 +1,7 @@
 global.fetch = require('node-fetch');
 require('dotenv').config();
 import webpack from 'webpack';
+import localeConfig from './lang/config';
 
 export default {
   mode: 'universal',
@@ -54,7 +55,8 @@ export default {
   modules: [
     'nuxt-i18n',
     'cookie-universal-nuxt',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+    '@nuxtjs/robots'
   ],
   build: {
     transpile: [
@@ -69,6 +71,10 @@ export default {
         })
       })
     ]
+  },
+  robots: {
+    // UserAgent: '*',
+    // Disallow: '/'
   },
   pwa: {
     manifest: {
@@ -117,22 +123,17 @@ export default {
           type: 'image/png'
         }
       ]
+    },
+    meta: {
+      name: 'VSF Next: Shopify APP',
+      author: 'Aureate labs',
+      description: 'This is the Shopify PWA app for VSF Next - Developed by Aureate labs',
+      themeColor: '#5ece7b',
+      ogHost: 'shopify-pwa.aureatelabs.com'
+    },
+    icon: {
+      iconSrc: 'src/static/android-icon-512x512.png'
     }
   },
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-    strategy: 'no_prefix',
-    vueI18n: {
-      fallbackLocale: 'en',
-      messages: {
-        en: {
-          welcome: 'Welcome 1'
-        },
-        de: {
-          welcome: 'Welcome 2'
-        }
-      }
-    }
-  }
+  i18n: localeConfig
 };

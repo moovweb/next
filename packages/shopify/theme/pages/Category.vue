@@ -359,7 +359,6 @@ export default {
 
     onSSR(async () => {
       await search(getCategorySearchParameters(context));
-      await productsSearch(productsSearchParams.value);
       filters.value = getFiltersFromUrl(context, availableFilters.value);
       await productsSearch(productsSearchParams.value);
       await loadCart();
@@ -446,7 +445,7 @@ export default {
   head () {
     return {
       title: this.category.title + ' : Shopify PWA'
-    }
+    };
   }
 };
 </script>

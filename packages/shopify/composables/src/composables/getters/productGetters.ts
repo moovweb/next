@@ -140,7 +140,6 @@ export const getProductId = (product: ProductVariant): string => (product as any
 export const getFormattedPrice = (price: number): string => price ? `₹ ${price}` : '';
 
 export const getProductStatus = (product: ProductVariant): boolean => {
-  console.log('getProductStatus', product);
   if (product && (product.availableForSale || product.available)) {
     return true;
   }
