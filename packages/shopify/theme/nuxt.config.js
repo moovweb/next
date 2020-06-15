@@ -1,6 +1,7 @@
 global.fetch = require('node-fetch');
 require('dotenv').config();
 import webpack from 'webpack';
+import localeConfig from './lang/config';
 
 export default {
   mode: 'universal',
@@ -72,8 +73,8 @@ export default {
     ]
   },
   robots: {
-    UserAgent: '*',
-    Disallow: '/'
+    // UserAgent: '*',
+    // Disallow: '/'
   },
   pwa: {
     manifest: {
@@ -134,20 +135,5 @@ export default {
       iconSrc: 'src/static/android-icon-512x512.png'
     }
   },
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-    strategy: 'no_prefix',
-    vueI18n: {
-      fallbackLocale: 'en',
-      messages: {
-        en: {
-          welcome: 'Welcome 1'
-        },
-        de: {
-          welcome: 'Welcome 2'
-        }
-      }
-    }
-  }
+  i18n: localeConfig
 };

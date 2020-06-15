@@ -2,7 +2,7 @@
 
 import { useCartFactory, UseCartFactoryParams } from '@vue-storefront/core';
 import { ref, Ref } from '@vue/composition-api';
-import { addToCart, removeCart, updateProductQty, cookies } from '@vue-storefront/shopify-api';
+import { addToCart, removeCart, updateProductQty } from '@vue-storefront/shopify-api';
 import { Cart, CartItem, Product } from '@vue-storefront/shopify-api/src/types';
 import { Coupon } from '../../types';
 import loadCurrentCart from './loadCurrentCart';
@@ -19,13 +19,11 @@ const fetchCartLineItem = ({ currentCart, product }) => {
 
 const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
   loadCart: async () => {
-    Cookies.set(cookies.cartCookieName, 'Chirag');
     const cartParams = {
       checkoutId: Cookies.get('cart_id') || '',
       id: Cookies.get('cart_id') || ''
     };
     const currentCart = await loadCurrentCart(cartParams);
-    // cart.push(currentCart);
     return currentCart;
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

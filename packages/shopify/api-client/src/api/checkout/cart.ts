@@ -13,13 +13,11 @@ import { Cart, CartParams } from '../../types';
  * @return {Promise|GraphModel} A promise resolving with a `GraphModel` of the checkout.
  */
 async function getCartFn(options: CartParams): Promise<Cart> {
-  console.log('AL: Cart Trace: API: getCartFn', options);
   const checkout = await _shopifyClient.checkout
     .fetch(options.id)
     .then((checkout) => {
       return checkout;
     });
-  console.log('AL: Cart Trace: API: getCartFn - response', checkout);
   return checkout;
 }
 
