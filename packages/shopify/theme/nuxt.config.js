@@ -122,6 +122,16 @@ export default {
           type: 'image/png'
         }
       ]
+    },
+    meta: {
+      name: 'VSF Next: Shopify APP',
+      author: 'Aureate labs',
+      description: 'This is the Shopify PWA app for VSF Next - Developed by Aureate labs',
+      themeColor: '#5ece7b',
+      ogHost: 'shopify-pwa.aureatelabs.com'
+    },
+    icon: {
+      iconSrc: 'src/static/android-icon-512x512.png'
     }
   },
   i18n: {
