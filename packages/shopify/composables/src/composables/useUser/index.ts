@@ -9,9 +9,14 @@ import Cookies from 'js-cookie';
 const params: UseUserFactoryParams<User, any, any> = {
   loadUser: async () => {
     let token = Cookies.get('token');
-    let result :any = await getCustomer.fetch(token);
-    const response : User = {};
-    return response;
+    let result:any = await getCustomer.fetch(token);
+    let customer = {};
+    if (result) {
+      customer = result['customer'];
+      return customer;
+    }
+
+    return customer;
   },
   logOut: async () => {
     let token = Cookies.get('token');
@@ -45,7 +50,7 @@ const params: UseUserFactoryParams<User, any, any> = {
   logIn: async ({ username, password }) => {
     let result = await getCustomer.signIn(username, password);
     const response : User = {
-      token : result['customerAccessTokenCreate'].customerAccessToken.accessToken,
+      token : (result['customerAccessTokenCreate'].customerAccessToken) ? result['customerAccessTokenCreate'].customerAccessToken.accessToken : null,
       error : (result['customerAccessTokenCreate'].customerUserErrors.length) ? result['customerAccessTokenCreate'].customerUserErrors[0].message : ''
     };
     Cookies.set('token', response.token);

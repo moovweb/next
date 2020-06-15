@@ -5,6 +5,7 @@
         Feel free to edit any of your details below so your account is always up
         to date
       </p>
+      <SfAlert v-if="success" class="alert" type="success" :message="success" />
       <ValidationObserver v-slot="{ handleSubmit }">
         <form class="form" @submit.prevent="handleSubmit(updateProfile)">
           <div class="form__horizontal">
@@ -112,6 +113,7 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import { SfTabs, SfInput, SfButton, SfAlert } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/shopify';
+import { onSSR } from '@vue-storefront/core';
 
 extend('email', {
   ...email,
@@ -155,59 +157,50 @@ export default {
     }
   },
   setup() {
-    const form = ref({});
-    const resetPassForm = () => ({ currentPassword: '', newPassword: '', repeatPassword: '' });
-    const { user, changePassword, updateUser } = useUser();
-    const error = ref(null);
-    //const form = ref(resetPassForm());
 
-    const handleForm = (fn) => async () => {
+    const form = ref({});
+    const { user, changePassword, updateUser, refreshUser } = useUser();
+    const success = ref(null);
+    const error = ref(null);
+
+    onSSR(async () => {
+      await refreshUser();
+      form.value = {
+        firstName: user.value.firstName,
+        lastName: user.value.lastName,
+        email: user.value.email
+      };
+    });
+
+    const handleForm = (fn, reset) => async () => {
       try {
         await fn(form.value);
+        success.value = 'Customer updated successfully';
       } catch (e) {
         error.value = e.message;
         return;
       }
-      form.value = {};
+      if (reset) {
+        form.value = {};
+      }
     };
 
-    const updatePassword = async () => handleForm(changePassword)();
+    const updatePassword = async () => handleForm(changePassword, true)();
 
-    const updateProfile = async () => handleForm(updateUser)();
+    const updateProfile = async () => handleForm(updateUser, false)();
 
     return {
       user,
       error,
+      success,
       form,
       updatePassword,
       updateProfile
     };
   },
-  data() {
+  head () {
     return {
-      firstName: '',
-      lastName: '',
-      email: ''
-    };
-  },
-  watch: {
-    account: {
-      handler(value) {
-        this.firstName = value.firstName;
-        this.lastName = value.lastName;
-        this.email = value.email;
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    updatePersonal() {
-      const personal = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email
-      };
-      this.$emit('update:personal', personal);
+      title: 'My profile : Shopify PWA'
     }
   }
 };
