@@ -1,13 +1,15 @@
 /**
  * import cart methods
  */
-import getCart from './cart';
-import createCart from './cart';
-import addToCart from './cart';
-import updateAttribute from './cart';
-import removeCart from './cart';
-import updateCart from './cart';
-import updateProductQty from './cart';
+import {
+  getCart,
+  createCart,
+  addToCart,
+  updateAttribute,
+  removeCart,
+  updateCart,
+  updateProductQty
+} from './cart'
 
 /**
  * Import discount methods

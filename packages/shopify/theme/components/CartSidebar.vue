@@ -19,34 +19,32 @@
         <div v-if="totalItems" class="my-cart" key="my-cart">
           <div class="my-cart__total-items">Total items: <strong>{{ totalItems }}</strong></div>
           <div class="collected-product-list">
-            <transition-group name="fade" tag="div">
-              <SfCollectedProduct
-                data-cy="collected-product-cart-sidebar"
-                v-for="product in products"
-                :key="cartGetters.getItemSku(product)"
-                :image="cartGetters.getItemImage(product)"
-                :title="cartGetters.getItemName(product)"
-                :regular-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).regular)"
-                :special-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).special)"
-                :stock="99999"
-                image-width="180"
-                image-height="200"
-                :qty="cartGetters.getItemQty(product)"
-                @input="updateQuantity(product, $event)"
-                @click:remove="removeFromCart(product)"
-                class="collected-product"
-              >
-                <template #configuration>
-                  <div class="collected-product__properties">
-                    <SfProperty v-for="(attributeVal, attributeName) in cartGetters.getItemAttributes(product)" :key="attributeVal" :name="attributeName" :value="attributeVal"/>
+            <SfCollectedProduct
+              data-cy="collected-product-cart-sidebar"
+              v-for="product in products"
+              :key="cartGetters.getItemSku(product)"
+              :image="cartGetters.getItemImage(product)"
+              :title="cartGetters.getItemName(product)"
+              :regular-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).regular)"
+              :special-price="cartGetters.getFormattedPrice(cartGetters.getItemPrice(product).special)"
+              :stock="99999"
+              image-width="180"
+              image-height="200"
+              :qty="cartGetters.getItemQty(product)"
+              @input="updateQuantity(product, $event)"
+              @click:remove="removeFromCart(product)"
+              class="collected-product"
+            >
+              <template #configuration>
+                <div class="collected-product__properties">
+                  <SfProperty v-for="(attributeVal, attributeName) in cartGetters.getItemAttributes(product)" :key="attributeVal" :name="attributeName" :value="attributeVal"/>
 
-                  </div>
-                </template>
-                <!-- <template #actions>
-                  <SfButton data-cy="cart-sidebar-btn_save-later" class="sf-button--text desktop-only">Save for later</SfButton>
-                </template> -->
-              </SfCollectedProduct>
-            </transition-group>
+                </div>
+              </template>
+              <!-- <template #actions>
+                <SfButton data-cy="cart-sidebar-btn_save-later" class="sf-button--text desktop-only">Save for later</SfButton>
+              </template> -->
+            </SfCollectedProduct>
           </div>
           <div class="sidebar-bottom">
           <SfProperty class="sf-property--full-width my-cart__total-price">
