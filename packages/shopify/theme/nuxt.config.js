@@ -33,7 +33,7 @@ export default {
     // to core
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
-    '@nuxtjs/pwa',
+    ['@nuxtjs/pwa', { icon: false }],
     ['@vue-storefront/nuxt', {
       coreDevelopment: true,
       useRawSource: {
@@ -80,10 +80,16 @@ export default {
     manifest: {
       name: 'VSF Next: Shopify APP',
       lang: 'en',
+      /* eslint-disable @typescript-eslint/class-name-casing */
+      /* eslint-disable @typescript-eslint/camelcase */
       shortName: 'VSF Next',
       startUrl: '/',
       display: 'standalone',
+      /* eslint-disable @typescript-eslint/class-name-casing */
+      /* eslint-disable @typescript-eslint/camelcase */
       backgroundColor: '#fff',
+      /* eslint-disable @typescript-eslint/class-name-casing */
+      /* eslint-disable @typescript-eslint/camelcase */
       themeColor: '#5ece7b',
       description: 'This is the Shopify PWA app for VSF Next',
       icons: [
@@ -128,6 +134,8 @@ export default {
       name: 'VSF Next: Shopify APP',
       author: 'Aureate labs',
       description: 'This is the Shopify PWA app for VSF Next - Developed by Aureate labs',
+      /* eslint-disable @typescript-eslint/class-name-casing */
+      /* eslint-disable @typescript-eslint/camelcase */
       themeColor: '#5ece7b',
       ogHost: 'shopify-pwa.aureatelabs.com'
     },

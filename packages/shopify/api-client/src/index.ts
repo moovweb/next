@@ -1,6 +1,6 @@
 import getCategory from './api/category';
 import getProduct from './api/product';
-import { getCart, createCart, addToCart, updateProductQty, removeCart } from './api/checkout/cart';
+import { getCart, createCart, addToCart, updateProductQty, removeCart, updateCart } from './api/checkout/cart';
 import getShop from './api/shop';
 import getCustomer from './api/customer';
 import getContent from './api/content';
@@ -38,6 +38,7 @@ export {
   createCart,
   addToCart,
   updateProductQty,
+  updateCart,
   removeCart,
   getShop,
   getCustomer,

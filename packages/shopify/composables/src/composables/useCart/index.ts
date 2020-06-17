@@ -2,7 +2,7 @@
 
 import { useCartFactory, UseCartFactoryParams } from '@vue-storefront/core';
 import { ref, Ref } from '@vue/composition-api';
-import { addToCart, removeCart, updateProductQty } from '@vue-storefront/shopify-api';
+import { addToCart, removeCart, updateCart } from '@vue-storefront/shopify-api';
 import { Cart, CartItem, Product } from '@vue-storefront/shopify-api/src/types';
 import { Coupon } from '../../types';
 import loadCurrentCart from './loadCurrentCart';
@@ -56,9 +56,9 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
     // const currentItem = fetchCartLineItem({ currentCart, product });
     const cartParams = {
       id: currentCart.id,
-      lineItems: [{ variantId: product.variant.id, quantity: quantity }]
+      lineItems: [{ id: product.id, variantId: product.variant.id, quantity: quantity }]
     };
-    const updatedCart = await updateProductQty(cartParams);
+    const updatedCart = await updateCart(cartParams);
     cart.value = updatedCart;
     return updatedCart;
   },
