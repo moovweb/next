@@ -36,26 +36,8 @@
             :key="productGetters.getSlug(product)"
             :product-key="i"
             :product="product"
+            @click.native="$emit('hideSearchBox')"
           />
-          <!-- <SfProductCard
-            data-cy="search-product-card"
-            v-for="(product, i) in products"
-            :key="productGetters.getSlug(product)"
-            :style="{ '--index': i }"
-            :title="productGetters.getName(product)"
-            :image="productGetters.getCoverImage(product)"
-            :regular-price="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
-            :special-price="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
-            :max-rating="5"
-            :score-rating="3"
-            :show-add-to-cart-button="true"
-            :isOnWishlist="false"
-            :isAddedToCart="isOnCart(product)"
-            @click:wishlist="toggleWishlist(i)"
-            @click:add-to-cart="addToCart(product, 1)"
-            :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
-            class="products__product-card"
-          /> -->
         </div>
       </SfScrollable>
     </SfMegaMenuColumn>
@@ -102,7 +84,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .search-results {
     position: absolute;
     left: 0;
@@ -118,9 +100,11 @@ export default {
 
     &__products {
       flex: 1;
+      margin: auto;
     }
     .sf-mega-menu__menu {
       flex: 1;
+      width: 100%;
     }
   }
 </style>

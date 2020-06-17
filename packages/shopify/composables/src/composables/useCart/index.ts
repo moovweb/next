@@ -24,6 +24,7 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
       id: Cookies.get('cart_id') || ''
     };
     const currentCart = await loadCurrentCart(cartParams);
+    cart.value = currentCart;
     return currentCart;
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
