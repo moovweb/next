@@ -27,10 +27,10 @@ async function getProduct(options: ProductSearchParams): Promise<Product[]> {
     if (shopifySortKeys[options.customQuery.sortKey]) {
       options.customQuery.sortKey = shopifySortKeys[options.customQuery.sortKey];
     } else if (options.customQuery.sortKey === 'price-asc' || options.customQuery.sortKey === 'price-desc') {
-      options.customQuery.sortKey = shopifySortKeys.price;
-      if (options.customQuery.sortKey === 'price-desc') {
+      if (options.customQuery.sortKey === 'price-asc') {
         options.customQuery.reverse = false;
       }
+      options.customQuery.sortKey = shopifySortKeys.price;
     }
   }
 

@@ -13,17 +13,39 @@
   >
     <!-- TODO: add mobile view buttons after SFUI team PR -->
     <template #logo>
-      <nuxt-link data-cy="app-header-url_logo" :to="localePath('/')" class="sf-header__logo">
-        <SfImage src="/icons/logo.svg" alt="Vue Storefront Next" class="sf-header__logo-image"/>
+      <nuxt-link
+        data-cy="app-header-url_logo"
+        :to="localePath('/')"
+        class="sf-header__logo"
+      >
+        <SfImage
+          src="/icons/logo.svg"
+          alt="Vue Storefront Next"
+          class="sf-header__logo-image"
+        />
       </nuxt-link>
     </template>
     <template #navigation>
-      <SfHeaderNavigationItem :data-cy="'app-header-url_' + category.handle" v-for="category in categories" :key="category.id">
+      <SfHeaderNavigationItem
+        :data-cy="'app-header-url_' + category.handle"
+        v-for="category in categories"
+        :key="category.id"
+      >
         <nuxt-link :to="'/c/' + category.handle">
           {{ category.title }}
         </nuxt-link>
       </SfHeaderNavigationItem>
-      <search-results :visible="showSearchResults" :categories="categoriesFound" :products="productsFound"/>
+      <div class="search-container">
+        <div class="o-search">
+          <search-results
+            :visible="showSearchResults"
+            :categories="categoriesFound"
+            :products="productsFound"
+            @hideSearchBox="hideSearchContainer()"
+          />
+        </div>
+      </div>
+      <div class="sf-overlay overlay" v-if="showSearchResults"></div>
     </template>
     <template #aside>
       <LocaleSelector class="mobile-only" />
@@ -34,7 +56,14 @@
 <script>
 import { SfHeader, SfImage } from '@storefront-ui/vue';
 import uiState from '~/assets/ui-state';
-import { useCart, useWishlist, useUser, useCategory, useSearch, cartGetters } from '@vue-storefront/shopify';
+import {
+  useCart,
+  useWishlist,
+  useUser,
+  useCategory,
+  useSearch,
+  cartGetters
+} from '@vue-storefront/shopify';
 import { computed, ref } from '@vue/composition-api';
 import { onSSR } from '@vue-storefront/core';
 import SearchResults from './SearchResults';
@@ -58,10 +87,14 @@ export default {
       return count ? count.toString() : null;
     });
 
-    const accountIcon = computed(() => isAuthenticated.value ? 'profile_fill' : 'profile');
+    const accountIcon = computed(() =>
+      isAuthenticated.value ? 'profile_fill' : 'profile'
+    );
 
     const onAccountClicked = () => {
-      isAuthenticated && isAuthenticated.value ? context.root.$router.push('/my-account') : toggleLoginModal();
+      isAuthenticated && isAuthenticated.value
+        ? context.root.$router.push('/my-account')
+        : toggleLoginModal();
     };
     const { search: productSearch, searchResults } = useSearch();
     const searchQuery = ref('');
@@ -81,6 +114,11 @@ export default {
       }
     };
     const { categories, search } = useCategory('categories');
+
+    const hideSearchContainer = () => {
+      searchQuery.value = '';
+      showSearchResults.value = false;
+    };
 
     onSSR(async () => {
       await search({ slug: '' });
@@ -102,7 +140,8 @@ export default {
       onAccountClicked,
       onSearchQueryChanged,
       toggleCartSidebar,
-      toggleWishlistSidebar
+      toggleWishlistSidebar,
+      hideSearchContainer
     };
   }
 };
@@ -111,5 +150,11 @@ export default {
 <style lang="scss" scoped>
 .sf-header__logo-image {
   height: 100%;
+}
+.search-container {
+  display: flex;
+  .o-search {
+    flex-grow: 1;
+  }
 }
 </style>

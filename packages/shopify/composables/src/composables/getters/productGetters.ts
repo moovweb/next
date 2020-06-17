@@ -157,6 +157,14 @@ export const getBreadcrumbs = (product: ProductVariant): any => {
       }
     }
   ];
+  if (product && product.productType) {
+    breadCrumbs.push({
+      text: product.productType,
+      route: {
+        link: '#'
+      }
+    });
+  }
   if (product && product.title) {
     breadCrumbs.push({
       text: getProductName(product),
