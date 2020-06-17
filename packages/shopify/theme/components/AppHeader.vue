@@ -45,7 +45,7 @@
           />
         </div>
       </div>
-      <div class="sf-overlay overlay" v-if="showSearchResults"></div>
+      <div class="sf-overlay overlay" v-if="showSearchResults" @click="hideSearchContainer()"></div>
     </template>
     <template #aside>
       <LocaleSelector class="mobile-only" />
@@ -146,13 +146,13 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
 .sf-header__logo-image {
   height: 100%;
 }
 .search-container {
   display: flex;
+  z-index: 2;
   .o-search {
     flex-grow: 1;
   }
