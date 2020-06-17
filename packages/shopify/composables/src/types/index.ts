@@ -39,11 +39,24 @@ type Coupon = {
 }
 
 type Order = {
-
+  name?: string;
+  totalPriceV2?: {
+    amount?: number,
+    currencyCode?: string
+  };
+  processedAt?: string;
+  financialStatus?: string;
+  lineItems?: OrderItem[]
 }
 
 type OrderItem = {
-
+  sku?: string;
+  originalTotalPrice?: {
+    amount?: number,
+    currencyCode?: string
+  };
+  quantity?: number;
+  title?: string;
 }
 
 type OrderSearchParams = {

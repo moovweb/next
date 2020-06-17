@@ -3,11 +3,12 @@ import { ordersQuery as query} from "./buildQueries";
 
 const fetchOrders = async (token): Promise<void> => {
 
-    return await _shopifyCustomClient.graphQLClient
-        .send(query)
+    const orders = await _shopifyCustomClient.graphQLClient
+        .send(query(10, token))
         .then(({ model }) => {
             return model;
         });
+    return orders;
 };
 
 export default fetchOrders;

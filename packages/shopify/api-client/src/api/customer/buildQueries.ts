@@ -29,34 +29,25 @@ let ordersQuery: (pages: number, token: string) => any = (pages, token): any => 
             customer.add('id');
             customer.addConnection('orders', {args: {first: pages}}, (order) => {
                 order.add('name');
-                order.add('email');
                 order.add('orderNumber');
                 order.add('processedAt');
                 order.add('financialStatus');
-                order.add('fulfillmentStatus');
-                order.add('originalTotalPrice', function (price) {
-                    price.add('amount');
-                    price.add('currencyCode');
-                });
-                order.add('subtotalPriceV2', function (price) {
-                    price.add('amount');
-                    price.add('currencyCode');
-                });
-                order.add('totalRefundedV2', function (price) {
-                    price.add('amount');
-                    price.add('currencyCode');
-                });
-                order.add('totalShippingPriceV2', function (price) {
-                    price.add('amount');
-                    price.add('currencyCode');
-                });
-                order.add('totalTaxV2', function (price) {
-                    price.add('amount');
-                    price.add('currencyCode');
-                });
                 order.add('totalPriceV2', function (price) {
                     price.add('amount');
                     price.add('currencyCode');
+                });
+                order.addConnection('lineItems', {args: {first: 100}}, function (item) {
+                    item.add('title');
+                    item.add('quantity');
+                    item.add('currentQuantity');
+                    item.add('originalTotalPrice', function (price) {
+                        price.add('amount');
+                        price.add('currencyCode');
+                    });
+                    item.add('variant', function (price) {
+                        price.add('sku');
+                        price.add('title');
+                    });
                 });
             });
         });

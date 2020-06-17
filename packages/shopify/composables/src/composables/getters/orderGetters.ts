@@ -4,28 +4,31 @@ import { UserOrderGetters } from '@vue-storefront/core';
 import { Order, OrderItem } from '../../types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getDate = (order: Order): string => '123';
+export const getDate = (order: Order): string => order.processedAt;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getId = (order: Order): string => '123';
+export const getId = (order: Order): string => order.name;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getStatus = (order: Order): string => '';
+export const getStatus = (order: Order): string => order.financialStatus;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getPrice = (order: Order): number | null => 0;
+export const getPrice = (order: Order): number | null => order.totalPriceV2.amount;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getItems = (order: Order): OrderItem[] => [];
+export const getItems = (order: Order): OrderItem[] => order.lineItems;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getItemSku = (item: OrderItem): string => '';
+export const getItemSku = (item: OrderItem): string => item.title;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getItemName = (item: OrderItem): string => '';
+export const getItemName = (item: OrderItem): string => item.title;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getItemQty = (item: OrderItem): number => 0;
+export const getItemQty = (item: OrderItem): number => item.quantity;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getItemPrice = (item: OrderItem): number => item.originalTotalPrice.amount;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getFormattedPrice = (price: number) => String(price);
@@ -39,6 +42,7 @@ const orderGetters: UserOrderGetters<Order, OrderItem> = {
   getItemSku,
   getItemName,
   getItemQty,
+  getItemPrice,
   getFormattedPrice
 };
 
