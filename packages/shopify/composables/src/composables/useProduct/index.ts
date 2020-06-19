@@ -10,6 +10,7 @@ const availableSortingOptions = [
 ];
 
 const productsSearch = async (params): Promise<ProductsSearchResult<Product, any, AgnosticSortByOption[]>> => {
+  console.log('AL: Trace: PLP issue - productsSearch', params);
   const searchParams = {
     ids: params.ids,
     with: params.term,

@@ -119,8 +119,17 @@ export const getProductFiltered = (products: ProductVariant[] | ProductVariant, 
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getProductAttributes = (products: ProductVariant[] | ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {
-  return {};
+export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {
+  // Fetch all attributes
+  const defaultOption = {};
+  if (product && product.variants && typeof product.variants[0] !== undefined) {
+    // Get selected options
+    product.variants[0].selectedOptions.map((pOption) => {
+      defaultOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
+    });
+  }
+  console.log('Current Product is', product.variants[0].selectedOptions, defaultOption, filterByAttributeName);
+  return defaultOption;
 };
 
 export const getProductOptions = (product: ProductVariant): Record<string, AgnosticAttribute | string> => {

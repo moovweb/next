@@ -245,7 +245,7 @@ export default {
     const product = computed(() => productGetters.getFiltered(products.value, { master: true, attributes: context.root.$route.query })[0]);
     const productPrice = computed(() => productGetters.getPrice(product));
     const options = computed(() => productGetters.getOptions(product.value));
-    const configuration = computed(() => productGetters.getAttributes(product.value, ['color', 'size']));
+    const configuration = computed(() => productGetters.getAttributes(product.value, { attributes: context.root.$route.query }));
     const categories = computed(() => productGetters.getCategoryIds(product.value));
     const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
 
@@ -256,11 +256,12 @@ export default {
     });
 
     const updateFilter = (filter) => {
-      context.root.$router.push({
-        path: context.root.$route.path,
-        query: { ...configuration.value,
-          ...filter }
-      });
+      console.log('Filter product', filter, configuration);
+      // context.root.$router.push({
+      //   path: context.root.$route.path,
+      //   query: { ...configuration.value,
+      //     ...filter }
+      // });
     };
 
     return {
@@ -363,7 +364,7 @@ export default {
   head () {
     return {
       title: productGetters.getName(this.product) + ' : Shopify PWA'
-    }
+    };
   }
 };
 </script>
