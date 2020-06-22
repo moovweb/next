@@ -77,6 +77,7 @@ export const getProductCoverImage = (product: ProductVariant): string => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductFiltered = (products: ProductVariant[] | ProductVariant, filters: ProductVariantFilters | any = {}): ProductVariant[] => {
+  console.log('get Product filtered', products, filters);
   if (!products) {
     return [];
   }
@@ -121,15 +122,22 @@ export const getProductFiltered = (products: ProductVariant[] | ProductVariant, 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {
   // Fetch all attributes
-  const defaultOption = {};
-  if (product && product.variants && typeof product.variants[0] !== undefined) {
+  const selectedOption = {};
+  if (product && product.variants && typeof product.variants[0] !== undefined && !filterByAttributeName) {
     // Get selected options
     product.variants[0].selectedOptions.map((pOption) => {
-      defaultOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
+      selectedOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
+    });
+  } else {
+    // Fetch the new variant of the product
+
+    product.variants[0].selectedOptions.map((pOption) => {
+      selectedOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
     });
   }
-  console.log('Current Product is', product.variants[0].selectedOptions, defaultOption, filterByAttributeName);
-  return defaultOption;
+
+  console.log('Current Product is', product.variants[0].selectedOptions, selectedOption, filterByAttributeName);
+  return selectedOption;
 };
 
 export const getProductOptions = (product: ProductVariant): Record<string, AgnosticAttribute | string> => {

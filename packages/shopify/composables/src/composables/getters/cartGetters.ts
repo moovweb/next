@@ -17,12 +17,31 @@ export const getCartItemImage = (product: LineItem): string => {
   return '';
 };
 
+export const checkSpecialPrice = (product: LineItem): boolean => {
+  const defaultVariant = product.variant;
+  if (defaultVariant.compareAtPrice !== '0.00') {
+    return true;
+  }
+  return false;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getCartItemPrice = (product: LineItem): AgnosticPrice => {
-  return {
+  let productPrice = {
     regular: 0,
     special: 0
   };
+  if (product && product.variant) {
+    const defaultVariant = product.variant;
+    productPrice = {
+      regular: parseFloat(defaultVariant.price),
+      special: 0
+    };
+    const hasSpecialPrice = checkSpecialPrice(product);
+    if (hasSpecialPrice) productPrice = { regular: parseFloat(defaultVariant.compareAtPrice), special: parseFloat(defaultVariant.price) };
+  }
+
+  return productPrice;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

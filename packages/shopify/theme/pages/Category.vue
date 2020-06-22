@@ -361,12 +361,14 @@ export default {
     onSSR(async () => {
       await search(getCategorySearchParameters(context));
       filters.value = getFiltersFromUrl(context, availableFilters.value);
+      console.log('AL: Category search params', categories);
       await productsSearch(productsSearchParams.value);
       await loadCart();
     });
 
     watch([itemsPerPage, sortBy, filters], () => {
       if (categories.value.length) {
+        console.log('AL: Category search params', categories);
         productsSearch(productsSearchParams.value);
         context.root.$router.push({ query: {
           ...context.root.$route.query,
@@ -391,7 +393,7 @@ export default {
 
     const applyFilters = (updatedFilters) => {
       filters.value = updatedFilters;
-      productsSearch(productsSearchParams.value);
+      // productsSearch(productsSearchParams.value);
       isFilterSidebarOpen.value = false;
     };
 

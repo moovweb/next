@@ -75,6 +75,7 @@
             <template v-for="(option, i) in options">
               <div v-if="option.name === 'size' || option.name === 'Size'" v-bind:key="i">
                 <SfSelect
+                  :selected="configuration.size"
                   @change="size => updateFilter({ size })"
                   :label="option.name"
                   class="sf-select--underlined product-details__attribute"
@@ -90,6 +91,7 @@
               </div>
               <div v-else-if="option.name === 'Color' || option.name === 'Color'" v-bind:key="i">
                 <SfSelect
+                  :selected="configuration.color"
                   @change="color => updateFilter({ color })"
                   :label="option.name"
                   class="sf-select--underlined product-details__attribute"
@@ -256,12 +258,12 @@ export default {
     });
 
     const updateFilter = (filter) => {
-      console.log('Filter product', filter, configuration);
-      // context.root.$router.push({
-      //   path: context.root.$route.path,
-      //   query: { ...configuration.value,
-      //     ...filter }
-      // });
+      console.log('Filter product', filter, configuration, options);
+      context.root.$router.push({
+        path: context.root.$route.path,
+        query: { ...configuration.value,
+          ...filter }
+      });
     };
 
     return {
