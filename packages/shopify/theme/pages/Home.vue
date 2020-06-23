@@ -35,18 +35,9 @@
     <SfSection title-heading="Best Sellers" class="section">
       <SfCarousel class="product-carousel">
         <SfCarouselItem v-for="(product, i) in products" :key="i">
-          <SfProductCard
-            data-cy="home-url_product"
-            :title="product.title"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :max-rating="product.rating.max"
-            :score-rating="product.rating.score"
-            :show-add-to-cart-button="true"
-            :is-on-wishlist="product.isOnWishlist"
-            link="/"
-            class="product-card"
-            @click:wishlist="toggleWishlist(i)"
+          <ProductTile
+            :product-key="i"
+            :product="product"
           />
         </SfCarouselItem>
       </SfCarousel>
@@ -91,9 +82,40 @@ import {
   SfBannerGrid
 } from '@storefront-ui/vue';
 import InstagramFeed from '~/components/InstagramFeed.vue';
+import { useProduct, useCart, productGetters } from '@vue-storefront/shopify';
+import { onSSR } from '@vue-storefront/core';
+import ProductTile from '~/components/ProductTile';
 
 export default {
   name: 'Home',
+  setup() {
+    const {
+      products,
+      search: productsSearch,
+      loading: productsLoading
+    } = useProduct('categoryProducts');
+    const { loadCart, addToCart, isOnCart } = useCart();
+
+    const productsSearchParams = {
+      customQuery: {
+        first: 8,
+        sortKey: 'bestSelling',
+        reverse: false
+      }
+    };
+
+    onSSR(async () => {
+      await productsSearch(productsSearchParams);
+      await loadCart();
+    });
+    return {
+      products,
+      productsLoading,
+      productGetters,
+      addToCart,
+      isOnCart
+    };
+  },
   components: {
     InstagramFeed,
     SfHero,
@@ -103,7 +125,8 @@ export default {
     SfCarousel,
     SfProductCard,
     SfImage,
-    SfBannerGrid
+    SfBannerGrid,
+    ProductTile
   },
   data() {
     return {
@@ -171,7 +194,7 @@ export default {
           class: 'sf-banner--slim'
         }
       ],
-      products: [
+      products1: [
         {
           title: 'Cream Beach Bag',
           image: '/homepage/productA.jpg',
@@ -241,7 +264,7 @@ export default {
           content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id eros sagittis, condimentum purus sit amet, pretium elit.'
         }
       ]
-    }
+    };
   },
   methods: {
     toggleWishlist(index) {
