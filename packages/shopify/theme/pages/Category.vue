@@ -327,9 +327,9 @@ export default {
 
     const { categories, search, loading } = useCategory('categories');
     const {
-      products: categoryProducts,
-      totalProducts,
-      search: productsSearch,
+      // products: categoryProducts,
+      // totalProducts,
+      // search: productsSearch,
       loading: productsLoading,
       availableFilters,
       availableSortingOptions
@@ -343,33 +343,33 @@ export default {
     const sortBy = ref(query.sort || (availableSortingOptions?.value && availableSortingOptions?.value[0] ? availableSortingOptions.value[0]?.value : 'createdAt'));
     const filters = ref(null);
 
-    const productsSearchParams = computed(() => ({
-      catId: (categories.value[0] || {}).id,
-      page: currentPage.value,
-      perPage: itemsPerPage.value,
-      filters: filters.value,
-      sort: sortBy.value,
-      customQuery: {
-        first: 20,
-        sortKey: sortBy.value,
-        reverse: true,
-        collection: (categories.value[0] || {}).handle
-        // query: ''
-      }
-    }));
+    // const productsSearchParams = computed(() => ({
+    //   catId: (categories.value[0] || {}).id,
+    //   page: currentPage.value,
+    //   perPage: itemsPerPage.value,
+    //   filters: filters.value,
+    //   sort: sortBy.value,
+    //   customQuery: {
+    //     first: 20,
+    //     sortKey: sortBy.value,
+    //     reverse: true,
+    //     query: 'tag:' + (categories.value[0] || {}).handle
+    //   }
+    // }));
 
     onSSR(async () => {
       await search(getCategorySearchParameters(context));
       filters.value = getFiltersFromUrl(context, availableFilters.value);
       console.log('AL: Category search params', categories);
-      await productsSearch(productsSearchParams.value);
+      // await productsSearch(productsSearchParams.value);
       await loadCart();
     });
 
     watch([itemsPerPage, sortBy, filters], () => {
       if (categories.value.length) {
+        search(getCategorySearchParameters(context));
         console.log('AL: Category search params', categories);
-        productsSearch(productsSearchParams.value);
+        // productsSearch(productsSearchParams.value);
         context.root.$router.push({ query: {
           ...context.root.$route.query,
           ...getFiltersForUrl(filters.value),
@@ -378,8 +378,10 @@ export default {
         }});
       }
     }, { deep: true });
+    console.log('Category Products', categories);
 
-    const products = computed(() => productGetters.getFiltered(categoryProducts.value, { master: true }));
+    const products = computed(() => productGetters.getFiltered(categories.value[0].products, { master: true }));
+    const totalProducts = computed(() => (categories.value[0].products)?.length);
     const categoryTree = computed(() => categoryGetters.getTree(categories.value[0]));
 
     const isCategorySelected = (slug) => slug === (categories.value && categories.value[0].slug);
