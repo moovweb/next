@@ -29,11 +29,14 @@ const params: UseCartFactoryParams<Cart, CartItem, Product, Coupon> = {
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addToCart: async ({ currentCart, product, quantity }) => {
-    currentCart.lineItems.push(product.variants[0]);
-    // const lineItems = Object.assign(currentCart.lineItems, { ...product['variants'][0] });
+    let productVariant = product.variants[0];
+    if (product && product.selectedVariant) {
+      productVariant = product && product.selectedVariant;
+    }
+    currentCart.lineItems.push(productVariant);
     const cartParams = {
       id: currentCart.id,
-      lineItems: [{ variantId: product.variants[0].id, quantity: quantity }]
+      lineItems: [{ variantId: productVariant.id, quantity: quantity }]
     };
     const updatedCart = await addToCart(cartParams);
     cart.value = updatedCart;

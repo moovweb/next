@@ -247,7 +247,7 @@ export default {
     const product = computed(() => productGetters.getFiltered(products.value, { master: true, attributes: context.root.$route.query })[0]);
     const productPrice = computed(() => productGetters.getPrice(product));
     const options = computed(() => productGetters.getOptions(product.value));
-    const configuration = computed(() => productGetters.getAttributes(product.value, { attributes: context.root.$route.query }));
+    const configuration = computed(() => productGetters.getAttributes(product.value, { ...context.root.$route.query }));
     const categories = computed(() => productGetters.getCategoryIds(product.value));
     const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
 

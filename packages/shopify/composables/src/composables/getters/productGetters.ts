@@ -77,38 +77,9 @@ export const getProductCoverImage = (product: ProductVariant): string => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductFiltered = (products: ProductVariant[] | ProductVariant, filters: ProductVariantFilters | any = {}): ProductVariant[] => {
-  console.log('get Product filtered', products, filters);
   if (!products) {
     return [];
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getVariantByAttributes = (products: ProductVariant, attributes: any): ProductVariant[] => {
-    if (!products) {
-      return [];
-    }
-    // Add default attributes
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const getDefaultOptions = (product: ProductVariant): any => {
-      return product.options.map((pOption) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const pOptionName = pOption.name;
-        return pOption.values.length === 1 ? { pOptionName: pOption.values[0] } : { pOptionName: pOption.values };
-      });
-    };
-    const configurationKeys = Object.keys(attributes);
-    const productVariants = products.variants;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const selectedVariant = productVariants.find((pVariant) => {
-      if (pVariant.selectedOptions.length === configurationKeys.length) {
-        const currentAttributes = pVariant.selectedOptions;
-        return configurationKeys.every((attrName) =>
-          currentAttributes.find(({ name, value }) => attrName === name && attributes[attrName] === value)
-        );
-      }
-    });
-    // products[selectedVariant] = selectedVariant;
-    return [];
-  };
   if (filters.attributes && Object.keys(filters.attributes).length > 0) {
     // const currentProduct = typeof products === 'object' ? products : products[0];
     // return [];
@@ -119,10 +90,35 @@ export const getProductFiltered = (products: ProductVariant[] | ProductVariant, 
   return Array.isArray(products) ? products : [products];
 };
 
+const fetchPVariantObject = (params: any) => {
+  const returnJson = {};
+  params.map(({name, value}) => returnJson[name.toLowerCase()] = value);
+  return returnJson;
+};
+
+const compareJson = (obj1: any, obj2: any) => {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+};
+
+const fetchVariant = (product: ProductVariant, filterByAttributeName?: string[]): ProductVariant | any => {
+  const productVariants = product?.variants;
+  if (productVariants) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const selectedVariant = productVariants.find((pVariant) => {
+      const currentAttributeObj = fetchPVariantObject(pVariant.selectedOptions);
+      if (compareJson(currentAttributeObj, filterByAttributeName)) {
+        return pVariant;
+      }
+    });
+    return selectedVariant;
+  }
+  return {};
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getProductAttributes = (product: ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {
   // Fetch all attributes
-  const selectedOption = {};
+  let selectedOption = {};
   if (product && product.variants && typeof product.variants[0] !== undefined && !filterByAttributeName) {
     // Get selected options
     product.variants[0].selectedOptions.map((pOption) => {
@@ -130,13 +126,16 @@ export const getProductAttributes = (product: ProductVariant, filterByAttributeN
     });
   } else {
     // Fetch the new variant of the product
-
-    product.variants[0].selectedOptions.map((pOption) => {
-      selectedOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
-    });
+    const selectedVariant = fetchVariant(product, filterByAttributeName);
+    if (selectedVariant) {
+      product.selectedVariant = fetchVariant(product, filterByAttributeName);
+      selectedOption = fetchPVariantObject(selectedVariant.selectedOptions);
+    } else {
+      product.variants[0].selectedOptions.map((pOption) => {
+        selectedOption[`${pOption.name.toLowerCase()}`] = `${pOption.value}`;
+      });
+    }
   }
-
-  console.log('Current Product is', product.variants[0].selectedOptions, selectedOption, filterByAttributeName);
   return selectedOption;
 };
 
