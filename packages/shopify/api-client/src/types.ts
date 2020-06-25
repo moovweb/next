@@ -158,6 +158,7 @@ export type Category = {
   description: Maybe<Scalars['String']>;
   descriptionHtml: Maybe<Scalars['String']>;
   updatedAt: Maybe<Scalars['String']>;
+  products: Maybe<Scalars['Array']>;
 }
 export type CategoryFilter = {}
 export type ShippingMethod = {}
@@ -201,18 +202,24 @@ export type CategorySearchParams = {
   withProducts: Maybe<Scalars['Boolean']>;
 }
 export type ProductSearchParams = {
-  id: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   // ids: Maybe<Scalars['Json']>;
-  slug: Maybe<Scalars['String']>;
-  handle: Maybe<Scalars['String']>;
-  customQuery: Maybe<Scalars['Json']>;
-  ids: any;
-  with: any;
-  where: any;
-  sort: any;
-  page: any;
-  masterKey: Maybe<Scalars['String']>;
-  term: any;
+  slug?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']>;
+  customQuery?: Maybe<Scalars['Json']>;
+  ids?: any;
+  with?: any;
+  where?: any;
+  sort?: any;
+  page?: any;
+  masterKey?: Maybe<Scalars['String']>;
+  term?: any;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  reverse?: Maybe<Scalars['Boolean']>;
+  sortKey?: Maybe<Scalars['String']>;
 }
 export type Shop = {}
 export type ShopSearchParams = {
@@ -262,4 +269,23 @@ export type Article = {
   author: any;
   url: Maybe<Scalars['String']>;
   tags: Maybe<Scalars['Array']>;
+}
+
+export type ProductsByCollectionSearchParams = {
+  __typename?: 'ProductsByCollectionSearch';
+  handle: Maybe<Scalars['String']>;
+  products?: Maybe<ProductSearchParams>;
+}
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+}
+
+export type ProductsByCollection = {
+  __typename?: 'ProductsByCollectionSearch';
+  category?: Maybe<Category>;
+  products?: Maybe<Product>;
+  pageInfo?: Maybe<PageInfo>;
 }

@@ -6,9 +6,9 @@ const loadCurrentCart = async (cartParams: CartParams) => {
   let cartResponse = null;
   if (cartParams && cartParams.id && cartParams.id !== '') {
     cartResponse = await getCart(cartParams);
-  } else {
-    cartResponse = await createCart(cartParams);
   }
+  if (cartResponse === null) cartResponse = await createCart(cartParams);
+  console.log('cart response', cartResponse, cartParams);
   // const cartResponse = cartParams && cartParams.id && cartParams.id !== '' ? await getCart(cartParams) : await createCart(cartParams);
   if (cartResponse && cartResponse.id) {
     Cookies.set('cart_id', cartResponse.id);
