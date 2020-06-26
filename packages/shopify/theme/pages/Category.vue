@@ -44,7 +44,7 @@
           {{ $t('Filters') }}
         </SfButton>
         <div class="navbar__sort desktop-only">
-          <span class="navbar__label">{{ $t('Sort by') }}: {{ sortBy }} {{ availableSortingOptions }} </span>
+          <span class="navbar__label">{{ $t('Sort by') }}: </span>
           <SfSelect v-model="sortBy" data-cy="category-select_sortBy">
             <SfSelectOption
               v-for="option in availableSortingOptions"
