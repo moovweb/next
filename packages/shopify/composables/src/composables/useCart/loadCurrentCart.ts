@@ -7,7 +7,7 @@ const loadCurrentCart = async (cartParams: CartParams) => {
   if (cartParams && cartParams.id && cartParams.id !== '') {
     cartResponse = await getCart(cartParams);
   }
-  if (cartResponse === null) cartResponse = await createCart(cartParams);
+  if (cartResponse === null || cartResponse.order !== null) cartResponse = await createCart(cartParams);
   if (cartResponse && cartResponse.id) {
     Cookies.set('cart_id', cartResponse.id);
     Cookies.set('cart', cartResponse);
