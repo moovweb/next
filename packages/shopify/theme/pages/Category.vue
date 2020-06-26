@@ -5,7 +5,7 @@
       :breadcrumbs="breadcrumbs"
     />
     <div class="navbar section">
-      <div class="navbar__aside desktop-only">
+      <div class="navbar__aside desktop-only" v-if="categoryTree.length > 1">
         <SfHeading :level="3" :title="$t('Categories')" class="navbar__title" />
       </div>
       <div class="navbar__main">
@@ -44,8 +44,8 @@
           {{ $t('Filters') }}
         </SfButton>
         <div class="navbar__sort desktop-only">
-          <span class="navbar__label">{{ $t('Sort by') }}:</span>
-          <SfSelect  v-model="sortBy" data-cy="category-select_sortBy">
+          <span class="navbar__label">{{ $t('Sort by') }}: {{ sortBy }} {{ availableSortingOptions }} </span>
+          <SfSelect v-model="sortBy" data-cy="category-select_sortBy">
             <SfSelectOption
               v-for="option in availableSortingOptions"
               :key="option.value"
@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="main section">
-      <div class="sidebar desktop-only">
+      <div class="sidebar desktop-only" v-if="categoryTree.length > 1">
         <SfLoader :class="{ loading }" :loading="loading">
           <SfAccordion :firstOpen="true" :showChevron="false">
             <SfAccordionItem
@@ -145,38 +145,6 @@
             :product-key="i"
             :product="product"
           />
-          <!-- <SfProductCard
-            data-cy="category-product-card"
-            v-for="(product, i) in products"
-            :key="productGetters.getSlug(product)"
-            :style="{ '--index': i }"
-            :title="productGetters.getName(product) + (productGetters.getStatus(product) ? '' : ' - Out of Stock')"
-            :image="productGetters.getCoverImage(product)"
-            :max-rating="5"
-            :score-rating="3"
-            :show-add-to-cart-button="true"
-            :isOnWishlist="false"
-            :add-to-cart-disabled="productGetters.getStatus(product) ? false : true"
-            :isAddedToCart="isOnCart(product)"
-            @click:wishlist="toggleWishlist(i)"
-            @click:add-to-cart="addToCart(product, parseInt(1))"
-            :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
-            class="products__product-card"
-          >
-            <template slot="price">
-              <SfPrice
-                v-if="productGetters.hasSpecialPrice(product)"
-                class="sf-product-card__price"
-                :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
-                :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
-              />
-              <SfPrice
-                v-else
-                class="sf-product-card__price"
-                :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
-              />
-            </template>
-          </SfProductCard> -->
         </transition-group>
         <transition-group
           v-else
@@ -205,14 +173,14 @@
             :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
           />
         </transition-group>
-        <SfPagination
+        <!-- <SfPagination
           data-cy="category-pagination"
           v-show="totalPages > 1"
           class="products__pagination"
           :current="currentPage"
           :total="totalPages"
           :visible="5"
-        />
+        /> -->
         <!-- TODO: change accordingly when designed by UI team: https://github.com/DivanteLtd/storefront-ui/issues/941 -->
         <div
           v-show="totalPages > 1"
@@ -319,6 +287,13 @@ const fallbackBreadcrumbs = [
   { text: 'Home', route: { link: '#' } }
 ];
 
+const availableSortingOptions = [
+  { value: 'createdAt', label: 'Latest' },
+  { value: 'price-asc', label: 'Price from low to high' },
+  { value: 'price-desc', label: 'Price from high to low' },
+  { value: 'bestSelling', label: 'Best selling' }
+];
+
 export default {
   transition: 'fade',
   setup(props, context) {
@@ -331,8 +306,8 @@ export default {
       // totalProducts,
       // search: productsSearch,
       loading: productsLoading,
-      availableFilters,
-      availableSortingOptions
+      availableFilters
+      // availableSortingOptions
     } = useProduct('categoryProducts');
     const { loadCart, addToCart, isOnCart } = useCart();
     const { addToWishlist } = useWishlist();
@@ -340,36 +315,18 @@ export default {
     const currentPage = ref(parseInt(query.page, 10) || 1);
     const itemsPerPage = ref(parseInt(query.items, 10) || perPageOptions[0]);
 
-    const sortBy = ref(query.sort || (availableSortingOptions?.value && availableSortingOptions?.value[0] ? availableSortingOptions.value[0]?.value : 'createdAt'));
+    const sortBy = ref(query.sort || 'createdAt');
     const filters = ref(null);
-
-    // const productsSearchParams = computed(() => ({
-    //   catId: (categories.value[0] || {}).id,
-    //   page: currentPage.value,
-    //   perPage: itemsPerPage.value,
-    //   filters: filters.value,
-    //   sort: sortBy.value,
-    //   customQuery: {
-    //     first: 20,
-    //     sortKey: sortBy.value,
-    //     reverse: true,
-    //     query: 'tag:' + (categories.value[0] || {}).handle
-    //   }
-    // }));
 
     onSSR(async () => {
       await search(getCategorySearchParameters(context));
       filters.value = getFiltersFromUrl(context, availableFilters.value);
-      console.log('AL: Category search params', categories);
-      // await productsSearch(productsSearchParams.value);
       await loadCart();
     });
 
     watch([itemsPerPage, sortBy, filters], () => {
       if (categories.value.length) {
         search(getCategorySearchParameters(context));
-        console.log('AL: Category search params', categories);
-        // productsSearch(productsSearchParams.value);
         context.root.$router.push({ query: {
           ...context.root.$route.query,
           ...getFiltersForUrl(filters.value),
@@ -378,7 +335,6 @@ export default {
         }});
       }
     }, { deep: true });
-    console.log('Category Products', categories);
 
     const products = computed(() => productGetters.getFiltered(categories.value[0].products, { master: true }));
     const totalProducts = computed(() => (categories.value[0].products)?.length);
@@ -395,7 +351,6 @@ export default {
 
     const applyFilters = (updatedFilters) => {
       filters.value = updatedFilters;
-      // productsSearch(productsSearchParams.value);
       isFilterSidebarOpen.value = false;
     };
 
@@ -577,7 +532,7 @@ export default {
   box-sizing: border-box;
   flex: 1;
   @include for-desktop {
-    margin: var(--spacer-xl);
+    margin: var(--spacer-sm);
   }
   @include for-mobile {
     display: flex;

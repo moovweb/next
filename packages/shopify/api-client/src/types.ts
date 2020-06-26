@@ -220,6 +220,7 @@ export type ProductSearchParams = {
   before?: Maybe<Scalars['String']>;
   reverse?: Maybe<Scalars['Boolean']>;
   sortKey?: Maybe<Scalars['String']>;
+  collectionQuery?: Maybe<Scalars['Json']>;
 }
 export type Shop = {}
 export type ShopSearchParams = {

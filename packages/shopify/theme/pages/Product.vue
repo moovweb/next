@@ -258,7 +258,6 @@ export default {
     });
 
     const updateFilter = (filter) => {
-      console.log('Filter product', filter, configuration, options);
       context.root.$router.push({
         path: context.root.$route.path,
         query: { ...configuration.value,
