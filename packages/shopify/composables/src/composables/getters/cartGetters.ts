@@ -88,7 +88,7 @@ export const getCartTotalItems = (cart: Cart): number => {
   return 0;
 };
 
-export const getFormattedPrice = (price: number): string => price ? `₹ ${price}` : '';
+export const getFormattedPrice = (price: number): string => price ? `$ ${price}` : '';
 
 export const getCartCheckoutUrl = (cart: Cart): string => {
   if (cart) {
