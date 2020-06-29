@@ -6,30 +6,6 @@
     />
     <div class="product">
       <div class="product__gallery">
-        <!-- TODO: replace example images with the getter, wait for SfGallery fix by SFUI team: https://github.com/DivanteLtd/storefront-ui/issues/1074 -->
-        <!-- <SfGallery
-          class="gallery-mobile mobile-only"
-          :images="[
-            {
-              mobile: { url: '/productpage/productM.jpg' },
-              desktop: { url: '/productpage/productM.jpg' },
-              big: { url: '/productpage/productM.jpg' }
-            },
-            {
-              mobile: { url: '/productpage/productM.jpg' },
-              desktop: { url: '/productpage/productM.jpg' },
-              big: { url: '/productpage/productM.jpg' }
-            }
-          ]"
-        /> -->
-        <!-- <SfGallery
-          :images="productGetters.getGallery(product)"
-          :image-width="590"
-          :image-height="700"
-          :slider-options="{ autoplay: false, rewind: true, gap: 0 }"
-          :current="1"
-          :enable-zoom="false"
-        /> -->
         <SfImage
           v-for="(image, i) in productGetters.getGallery(product)" :key="i"
           :src="image.big"
@@ -52,26 +28,12 @@
               :regular="productGetters.getFormattedPrice(productGetters.getPrice(product).regular)"
               :special="productGetters.getFormattedPrice(productGetters.getPrice(product).special)"
             />
-            <div class="product-details__sub-rating">
-              <SfRating :score="4" :max="5" />
-              <SfButton data-cy="product-btn_read-all" class="product-details__sub-reviews sf-button--text desktop-only">
-                Read all reviews
-              </SfButton>
-              <div class="product-details__sub-reviews mobile-only">
-                (1)
-              </div>
-            </div>
           </div>
           <p class="product-details__description desktop-only">
             {{ productGetters.getDescription(product) }}
           </p>
-          <div class="product-details__action desktop-only">
-            <SfButton data-cy="product-btn_size-guide" class="sf-button--text color-secondary"
-              >Size guide</SfButton
-            >
-          </div>
           <!-- TODO: add size selector after design is added -->
-          <div class="product-details__section desktop-only" v-if="options.length > 0">
+          <div class="product-details__section" v-if="options.length > 0">
             <template v-for="(option, i) in options">
               <div v-if="option.name === 'size' || option.name === 'Size'" v-bind:key="i">
                 <SfSelect
@@ -107,7 +69,7 @@
               </div>
             </template>
           </div>
-          <div class="product-details__section desktop-only">
+          <div class="product-details__section">
             <SfAddToCart
               data-cy="product-cart_add"
               :stock="stock"
@@ -117,55 +79,21 @@
               @click="addToCart(product, parseInt(qty))"
               class="product-details__add-to-cart"
             />
-            <div class="product-details__action">
-              <SfButton data-cy="product-btn_save-later" class="sf-button--text color-secondary"
-                >Save for later</SfButton
-              >
-            </div>
-            <div class="product-details__action">
-              <SfButton data-cy="product-btn_add-to-compare" class="sf-button--text color-secondary"
-                >Add to compare</SfButton
-              >
-            </div>
           </div>
           <SfTabs class="product-details__tabs" :openTab="2">
             <SfTab data-cy="product-tab_description" title="Description">
               <div>
                 {{ productGetters.getDescription(product, true) }}
               </div>
-              <div class="product-details__properties">
-                <SfProperty
-                  v-for="(property, i) in properties"
-                  :key="i"
-                  :name="property.name"
-                  :value="property.value"
-                  class="product-property"
-                />
-              </div>
-            </SfTab>
-            <SfTab data-cy="product-tab_reviews" title="Read reviews">
-              <SfReview
-                class="product-details__review"
-                v-for="(review, i) in reviews"
-                :key="i"
-                :author="review.author"
-                :date="review.date"
-                :message="review.message"
-                :rating="review.rating"
-                :max-rating="5"
-              />
             </SfTab>
             <SfTab data-cy="product-tab_additional" title="Additional Information">
               <SfHeading
-                title="Brand"
+                title="Vendor"
                 :level="3"
                 class="sf-heading--no-underline sf-heading--left"
               />
               <p>
-                <u>Brand name</u> is the perfect pairing of quality and design.
-                This label creates major everyday vibes with its collection of
-                modern brooches, silver and gold jewellery, or clips it back
-                with hair accessories in geo styles.
+                {{ productGetters.getVendor(product) }}
               </p>
             </SfTab>
           </SfTabs>
@@ -305,56 +233,10 @@ export default {
   data() {
     return {
       stock: 5,
-      properties: [
-        {
-          name: 'Product Code',
-          value: '578902-00'
-        },
-        {
-          name: 'Category',
-          value: 'Pants'
-        },
-        {
-          name: 'Material',
-          value: 'Cotton'
-        },
-        {
-          name: 'Country',
-          value: 'Germany'
-        }
-      ],
-      reviews: [
-        {
-          author: 'Jane D.Smith',
-          date: 'April 2019',
-          message:
-            'I was looking for a bright light for the kitchen but wanted some item more modern than a strip light. this one is perfect, very bright and looks great. I can\'t comment on interlation as I had an electrition instal it. Would recommend',
-          rating: 4
-        },
-        {
-          author: 'Mari',
-          date: 'Jan 2018',
-          message:
-            'Excellent light output from this led fitting. Relatively easy to fix to the ceiling,but having two people makes it easier, to complete the installation. Unable to comment on reliability at this time, but I am hopeful of years of use with good light levels. Excellent light output from this led fitting. Relatively easy to fix to the ceiling,',
-          rating: 5
-        }
-      ],
       detailsIsActive: false,
       fallbackBreadcrumbs: [
         {
           text: 'Home',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Category',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Pants',
           route: {
             link: '#'
           }

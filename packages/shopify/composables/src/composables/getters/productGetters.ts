@@ -192,6 +192,11 @@ export const getBreadcrumbs = (product: ProductVariant): any => {
   return breadCrumbs;
 };
 
+export const getProductVendor = (product: ProductVariant): string => {
+  if (product && product.vendor) return product.vendor;
+  return null;
+};
+
 const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getName: getProductName,
   getSlug: getProductSlug,
@@ -208,7 +213,8 @@ const productGetters: ProductGetters<ProductVariant, ProductVariantFilters> = {
   getStatus: getProductStatus,
   hasSpecialPrice: checkSpecialPrice,
   isOnWishlist: checkForWishlist,
-  getBreadcrumbs: getBreadcrumbs
+  getBreadcrumbs: getBreadcrumbs,
+  getVendor: getProductVendor
 };
 
 export default productGetters;
