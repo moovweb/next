@@ -2,7 +2,7 @@
   <div>
     <SfModal
       :visible="isLoginModalOpen"
-      title="Log in"
+      :title="modalTitle"
       class="modal"
       @close="toggleLoginModal">
       <transition name="fade" mode="out-in">
@@ -133,7 +133,7 @@
   </div>
 </template>
 <script>
-import { ref, watch } from '@vue/composition-api';
+import { ref, watch, computed } from '@vue/composition-api';
 import { SfModal, SfInput, SfButton, SfCheckbox, SfLoader, SfAlert } from '@storefront-ui/vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
@@ -166,7 +166,7 @@ export default {
   },
   setup() {
     const form = ref({});
-    const isLogin = ref(false);
+    const isLogin = ref(true);
     const createAccount = ref(false);
     const rememberMe = ref(false);
     const { register, login, loading, user } = useUser();
@@ -177,10 +177,14 @@ export default {
       }
     });
 
+    const modalTitle = computed(() =>
+      isLogin.value ? 'Log in' : 'Register'
+    );
+
     const handleForm = (fn) => async () => {
       await fn(form.value);
       if (user.value.error) {
-        alert(user.value.error);
+        console.log('User error', user.value.error);
       } else {
         toggleLoginModal();
       }
@@ -199,7 +203,8 @@ export default {
       isLoginModalOpen,
       toggleLoginModal,
       handleLogin,
-      handleRegister
+      handleRegister,
+      modalTitle
     };
   }
 };

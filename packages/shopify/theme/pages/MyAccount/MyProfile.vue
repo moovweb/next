@@ -165,11 +165,13 @@ export default {
 
     onSSR(async () => {
       await refreshUser();
-      form.value = {
-        firstName: user.value.firstName,
-        lastName: user.value.lastName,
-        email: user.value.email
-      };
+      if (user && user.value) {
+        form.value = {
+          firstName: user.value.firstName,
+          lastName: user.value.lastName,
+          email: user.value.email
+        };
+      }
     });
 
     const handleForm = (fn, reset) => async () => {
@@ -201,7 +203,7 @@ export default {
   head () {
     return {
       title: 'My profile : Shopify PWA'
-    }
+    };
   }
 };
 </script>

@@ -92,6 +92,7 @@ export default {
     );
 
     const onAccountClicked = () => {
+      console.log('User account clicked', isAuthenticated);
       isAuthenticated && isAuthenticated.value
         ? context.root.$router.push('/my-account')
         : toggleLoginModal();
