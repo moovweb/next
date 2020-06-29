@@ -9,10 +9,6 @@ import Cookies from 'js-cookie';
 const params: UseUserFactoryParams<User, any, any> = {
   loadUser: async () => {
     const token = Cookies.get('token');
-    console.log('User account clicked: Load User', token);
-    if (token) {
-      // await getCustomer.signOut(token);
-    }
     const result: any = await getCustomer.fetch(token);
     let customer = null;
     if (result) {

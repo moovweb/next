@@ -1,27 +1,57 @@
 <template>
 <!-- TODO: create logic with isActive prop for BottomNavigationItems -->
-  <SfBottomNavigation class="mobile-only">
+  <SfBottomNavigation class="mobile-only bottom-menu-mobile">
     <nuxt-link data-cy="bottom-navigation-url_home" to="/">
       <SfBottomNavigationItem :class="$route.path == '/' ? 'sf-bottom-navigation__item--active' : ''" icon="home" size="20px" label="Home"/>
     </nuxt-link>
-    <SfBottomNavigationItem data-cy="bottom-navigation-url_menu" icon="menu" size="20px" label="Menu"/>
-    <SfBottomNavigationItem data-cy="bottom-navigation-url_account" icon="profile" size="20px" label="Account" @click="onAccountClicked" />
-    <!-- TODO: add logic for label - if on Home then Basket, if on PDC then AddToCart etc. -->
-    <!-- <SfBottomNavigationItem data-cy="bottom-navigation-url_add-to-cart"
-      label="Basket"
-      icon="add_to_cart"
-      >
+    <SfBottomNavigationItem
+      icon="menu"
+      data-cy="bottom-navigation-url_menu"
+      icon-size="20px"
+      label="Menu"
+      class="menu-button arrow-hide"
+    >
       <template #icon>
-        <SfCircleIcon aria-label="Add to cart">
-          <SfIcon
-            icon="add_to_cart"
-            color="white"
-            size="25px"
-            :style="{margin: '0 0 0 -2px'}"
-          />
-        </SfCircleIcon>
+        <SfIcon icon="menu" size="20px" style="width: 25px;" />
+        <SfSelect class="menu-button__select">
+          <SfSelectOption
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+          >
+            <nuxt-link :to="'/c/' + category.handle">
+              {{ category.title }}
+            </nuxt-link>
+          </SfSelectOption>
+        </SfSelect>
       </template>
-    </SfBottomNavigationItem> -->
+    </SfBottomNavigationItem>
+    <SfBottomNavigationItem
+      icon="profile"
+      data-cy="bottom-navigation-url_account"
+      label="Account"
+      class="menu-button arrow-hide"
+    >
+      <template #icon>
+        <SfIcon icon="profile" size="20px" @click="onAccountClicked" />
+        <SfSelect v-if="isLoggedIn" class="menu-button__select">
+          <!-- TODO: change .native to @click after https://github.com/DivanteLtd/storefront-ui/issues/1097 -->
+          <SfSelectOption
+            :value="'my-account'"
+            @click.native="onAccountClicked"
+          >
+            My account
+          </SfSelectOption>
+          <!-- TODO: change .native to @click after https://github.com/DivanteLtd/storefront-ui/issues/1097 -->
+          <SfSelectOption
+            :value="'logout'"
+            @click.native="logout"
+          >
+            Logout
+          </SfSelectOption>
+        </SfSelect>
+      </template>
+    </SfBottomNavigationItem>
     <SfBottomNavigationItem
       :icon="cartIcon"
       label="Cart"
@@ -41,11 +71,12 @@
 </template>
 
 <script>
-import { SfBottomNavigation, SfIcon, SfCircleIcon } from '@storefront-ui/vue';
+import { SfBottomNavigation, SfIcon, SfCircleIcon, SfButton, SfSelect } from '@storefront-ui/vue';
 import uiState from '~/assets/ui-state';
 import {
   useCart,
   useUser,
+  useCategory,
   cartGetters
 } from '@vue-storefront/shopify';
 import { computed } from '@vue/composition-api';
@@ -56,11 +87,14 @@ export default {
   components: {
     SfBottomNavigation,
     SfIcon,
+    SfButton,
+    SfSelect,
     SfCircleIcon
   },
   setup(props, context) {
-    const { isAuthenticated } = useUser();
+    const { isAuthenticated, logout } = useUser();
     const { cart, loadCart } = useCart();
+    const { categories, search } = useCategory('categories');
     const cartTotalItems = computed(() => {
       const count = cartGetters.getTotalItems(cart.value);
       return count ? count.toString() : null;
@@ -68,6 +102,10 @@ export default {
 
     const accountIcon = computed(() =>
       isAuthenticated.value ? 'profile_fill' : 'profile'
+    );
+
+    const isLoggedIn = computed(() =>
+      isAuthenticated.value ? isAuthenticated.value : false
     );
 
     const cartIcon = computed(() => {
@@ -83,12 +121,16 @@ export default {
     };
 
     onSSR(async () => {
+      await search({ slug: '' });
       await loadCart();
     });
 
     return {
       accountIcon,
+      logout,
       cartIcon,
+      categories,
+      isLoggedIn,
       cartTotalItems,
       toggleLoginModal,
       onAccountClicked,
@@ -97,3 +139,17 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.bottom-menu-mobile {
+  .arrow-hide {
+    .sf-select {
+      padding: 0;
+      position: absolute;
+      .sf-select__chevron {
+        display: none !important;
+      }
+    }
+  }
+
+}
+</style>
