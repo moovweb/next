@@ -201,11 +201,6 @@ export default {
       isMobile: false,
       desktopMin: 1024
     };
-  },
-  methods: {
-    openSocialLink(linkDetail) {
-      window.location.href = getFooterLink(linkDetail);
-    }
   }
 };
 </script>
