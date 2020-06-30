@@ -189,7 +189,13 @@ export default {
           slug: 'https://www.instagram.com/aureate_labs',
           type: 'social',
           title: 'Instagram',
-          icon: 'insta'
+          icon: 'instagram'
+        },
+        {
+          slug: 'https://www.youtube.com/channel/UC-gHzpwI_CrXplSquIPjppQ',
+          type: 'social',
+          title: 'Youtube',
+          icon: 'youtube'
         }
       ],
       isMobile: false,
