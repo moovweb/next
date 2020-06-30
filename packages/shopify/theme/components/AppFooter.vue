@@ -7,9 +7,15 @@
           :key="item"
           >
           <SfMenuItem
-            :data-cy="`app-foter-url_about-us_${item.split(' ').join('-').toLowerCase()}`"
-            :label="$t(item)"
-          />
+            :data-cy="`app-foter-url_about-us_${item.title.split(' ').join('-').toLowerCase()}`"
+            :label="$t(item.title)"
+          >
+            <template #label>
+              <nuxt-link :to="localePath(getFooterLink(item))">
+                {{ $t(item.title) }}
+              </nuxt-link>
+            </template>
+          </SfMenuItem>
         </SfListItem>
       </SfList>
     </SfFooterColumn>
@@ -18,11 +24,17 @@
         <SfListItem
           v-for="item in departments"
           :key="item"
-        >
+          >
           <SfMenuItem
-            :data-cy="`app-foter-url_departments_${item.split(' ').join('-').toLowerCase()}`"
-            :label="$t(item)"
-          />
+            :data-cy="`app-foter-url_departments_${item.title.split(' ').join('-').toLowerCase()}`"
+            :label="$t(item.title)"
+          >
+            <template #label>
+              <nuxt-link :to="localePath(getFooterLink(item))">
+                {{ $t(item.title) }}
+              </nuxt-link>
+            </template>
+          </SfMenuItem>
         </SfListItem>
       </SfList>
     </SfFooterColumn>
@@ -31,11 +43,17 @@
         <SfListItem
           v-for="item in help"
           :key="item"
-        >
+          >
           <SfMenuItem
-            :data-cy="`app-foter-url_help_${item.split(' ').join('-').toLowerCase()}`"
-            :label="$t(item)"
-          />
+            :data-cy="`app-foter-url_help_${item.title.split(' ').join('-').toLowerCase()}`"
+            :label="$t(item.title)"
+          >
+            <template #label>
+              <nuxt-link :to="localePath(getFooterLink(item))">
+                {{ $t(item.title) }}
+              </nuxt-link>
+            </template>
+          </SfMenuItem>
         </SfListItem>
       </SfList>
     </SfFooterColumn>
@@ -44,23 +62,32 @@
         <SfListItem
           v-for="item in paymentsDelivery"
           :key="item"
-        >
+          >
           <SfMenuItem
-            :data-cy="`app-foter-url_payment_${item.split(' ').join('-').toLowerCase()}`"
-            :label="$t(item)"
-          />
+            :data-cy="`app-foter-url_help_${item.title.split(' ').join('-').toLowerCase()}`"
+            :label="$t(item.title)"
+          >
+            <template #label>
+              <nuxt-link :to="localePath(getFooterLink(item))">
+                {{ $t(item.title) }}
+              </nuxt-link>
+            </template>
+          </SfMenuItem>
         </SfListItem>
       </SfList>
     </SfFooterColumn>
     <SfFooterColumn title="Social">
       <div class="footer__socials">
-        <SfImage class="footer__social-image" v-for="item in social" :key="item" :alt="item" :src="'/icons/'+item+'.svg'" width="12" height="12" />
+        <a target="__blank" :href="getFooterLink(item)" v-for="item in social" :key="item.title" >
+          <SfImage class="footer__social-image" :alt="item.title" :src="'/icons/'+item.icon+'.svg'" width="12" height="12" />
+        </a>
       </div>
     </SfFooterColumn>
   </SfFooter>
 </template>
 
 <script>
+import { getFooterLink } from '~/helpers/app';
 import { SfFooter, SfList, SfImage, SfMenuItem } from '@storefront-ui/vue';
 
 export default {
@@ -70,16 +97,109 @@ export default {
     SfImage,
     SfMenuItem
   },
+  setup() {
+    return {
+      getFooterLink
+    };
+  },
   data() {
     return {
-      aboutUs: ['Who we are', 'Quality in the details', 'Customer Reviews'],
-      departments: ['Women fashion', 'Men fashion', 'Kidswear', 'Home'],
-      help: ['Customer service', 'Size guide', 'Contact us'],
-      paymentsDelivery: ['Purchase terms', 'Guarantee'],
-      social: ['facebook', 'pinterest', 'twitter', 'youtube'],
+      aboutUs: [
+        {
+          slug: 'who-we-are',
+          type: 'page',
+          title: 'Who we are'
+        },
+        {
+          slug: 'quality-in-the-details',
+          type: 'page',
+          title: 'Quality in the details'
+        },
+        {
+          slug: 'customer-reviews',
+          type: 'page',
+          title: 'Customer Reviews'
+        }
+      ],
+      departments: [
+        {
+          slug: 'clothes',
+          type: 'collection',
+          title: 'Clothes'
+        },
+        {
+          slug: 'event-dressing',
+          type: 'collection',
+          title: 'Event Dressing'
+        },
+        {
+          slug: 'accessories',
+          type: 'collection',
+          title: 'Accessories'
+        },
+        {
+          slug: 'outlet',
+          type: 'collection',
+          title: 'Outlet'
+        }
+      ],
+      help: [
+        {
+          slug: 'customer-service',
+          type: 'page',
+          title: 'Customer service'
+        },
+        {
+          slug: 'size-guide',
+          type: 'page',
+          title: 'Size guide'
+        },
+        {
+          slug: 'contact-us',
+          type: 'page',
+          title: 'Contact us'
+        }
+      ],
+      paymentsDelivery: [
+        {
+          slug: 'purchase-terms',
+          type: 'page',
+          title: 'Purchase terms'
+        },
+        {
+          slug: 'guarantee',
+          type: 'page',
+          title: 'Guarantee'
+        }
+      ],
+      social: [
+        {
+          slug: 'https://twitter.com/aureate_labs',
+          type: 'social',
+          title: 'Twitter',
+          icon: 'twitter'
+        },
+        {
+          slug: 'https://www.facebook.com/aureate.labs',
+          type: 'social',
+          title: 'Facebook',
+          icon: 'facebook'
+        },
+        {
+          slug: 'https://www.instagram.com/aureate_labs',
+          type: 'social',
+          title: 'Instagram',
+          icon: 'insta'
+        }
+      ],
       isMobile: false,
       desktopMin: 1024
     };
+  },
+  methods: {
+    openSocialLink(linkDetail) {
+      window.location.href = getFooterLink(linkDetail);
+    }
   }
 };
 </script>
