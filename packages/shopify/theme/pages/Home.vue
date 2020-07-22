@@ -361,3 +361,20 @@ export default {
   }
 }
 </style>
+
+<style lang="scss">
+  #home {
+    .sf-hero {
+      .sf-button {
+        color: #000000 !important;
+        font-weight: normal !important;
+      }
+    }
+    .call-to-action {
+      .sf-button {
+        color: #000000 !important;
+        font-weight: normal !important;
+      }
+    }
+  }
+</style>
