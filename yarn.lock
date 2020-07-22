@@ -1970,6 +1970,31 @@
     webpack-node-externals "^1.7.2"
     webpackbar "^4.0.0"
 
+"@nuxtjs/dotenv@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/dotenv/-/dotenv-1.4.1.tgz#dd5abb98e22cc7ae27139d3aa606151034293128"
+  integrity sha512-DpdObsvRwC8d89I9mzz6pBg6e/PEXHazDM57DOI1mmML2ZjHfQ/DvkjlSzUL7T+TnW3b/a4Ks5wQx08DqFBmeQ==
+  dependencies:
+    consola "^2.10.1"
+    dotenv "^8.1.0"
+
+"@nuxtjs/pwa@^3.0.0-beta.20":
+  version "3.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/pwa/-/pwa-3.0.0-beta.20.tgz#56766da5485c09cb73307285292203f4a4417d5d"
+  integrity sha512-pZhGBqRvTCItvAdZ6PSZtqJUKT6ybphXCykfHh95KzW0cGf10QH/ETPci2AMDEzfx4jW2hImGSmLBToVWOV7Uw==
+  dependencies:
+    defu "^1.0.0"
+    execa "^1.0.0"
+    fs-extra "^8.1.0"
+    hasha "^5.0.0"
+    jimp-compact "^0.8.0"
+    workbox-cdn "^4.3.1"
+
+"@nuxtjs/robots@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/robots/-/robots-2.4.2.tgz#9a96c91abb70e39b414eec502ef1cf7d5ef0235e"
+  integrity sha512-BW3qhvxlPBKlMkZHtARFPeliFraiZHS28G3j4qgRbSfOBtHC0yDX3Dnq1LkQMzAbPfbw6A1L3sdjgBVZZnfFAw==
+
 "@nuxtjs/youch@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/youch/-/youch-4.2.3.tgz#36f8b22df5a0efaa81373109851e1d857aca6bed"
@@ -2540,6 +2565,14 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
+"@types/node-fetch@^2.5.7":
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.7.tgz#20a2afffa882ab04d44ca786449a276f9f6bbf3c"
+  integrity sha512-o2WVNf5UhWRkxlf6eq+jMZDu7kjgpgJfl4xVNlvryc95O/6F2ld8ztKX+qu+Rjyet93WAWm5LjeX9H5FGkODvw==
+  dependencies:
+    "@types/node" "*"
+    form-data "^3.0.0"
+
 "@types/node-sass@^4.11.0":
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/@types/node-sass/-/node-sass-4.11.0.tgz#b0372075546e83f39df52bd37359eab00165a04d"
@@ -2625,6 +2658,11 @@
   dependencies:
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
+
+"@types/shopify-buy@^1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@types/shopify-buy/-/shopify-buy-1.11.1.tgz#a40ef9e4f4859b490f4bafa6f2894166a527e273"
+  integrity sha512-SK+inKi30Gfju3yAysjk7LUvUJYytkQhJcbI5afQPpvGrdBNGLuDat9vcogV9vCh2gpPRymQIzaA/qd7eJG5+g==
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -4711,7 +4749,7 @@ columnify@^1.5.4:
     strip-ansi "^3.0.0"
     wcwidth "^1.0.0"
 
-combined-stream@^1.0.6, combined-stream@~1.0.6:
+combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   dependencies:
@@ -5818,6 +5856,11 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dotenv@^8.1.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -6679,6 +6722,15 @@ fork-ts-checker-webpack-plugin@^3.1.1:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
+form-data@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
+  integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
 form-data@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
@@ -7200,6 +7252,14 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
+
+hasha@^5.0.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/hasha/-/hasha-5.2.0.tgz#33094d1f69c40a4a6ac7be53d5fe3ff95a269e0c"
+  integrity sha512-2W+jKdQbAdSIrggA8Q35Br8qKadTrqCTC8+XZvBWepKDK6m9XkX6Iz1a2yh2KP01kzAR/dpuMeUnocoLYDcskw==
+  dependencies:
+    is-stream "^2.0.0"
+    type-fest "^0.8.0"
 
 hast-util-parse-selector@^2.0.0:
   version "2.2.4"
@@ -8488,6 +8548,11 @@ jest@^24.1.0, jest@^24.9.0:
   dependencies:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
+
+jimp-compact@^0.8.0:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/jimp-compact/-/jimp-compact-0.8.5.tgz#4dd5be1df94111902a58e6e698cbbdea9bdc1e0b"
+  integrity sha512-BkpiX6jZyDVLU+CleO/6yF8SFHnyZXiElPryNjZx58AK1vy+bqSFvhKeFS680TISSr8IWqHlIAwDMMA0DTQkMw==
 
 js-base64@^2.1.8:
   version "2.5.2"
@@ -12616,6 +12681,11 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
 
+shopify-buy@^2.9.3:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-2.11.0.tgz#0f7cb52741395e4ae778c336f32ddf3fe67c2f35"
+  integrity sha512-bGjS1b/VCPvCjazSstlKwgLtK1WBotWom06/12loja8yfo/cWkLuJsakBbQe1uEIDiOLhKaR0M0CAXZFheYDug==
+
 sigmund@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
@@ -13689,7 +13759,7 @@ type-fest@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.3.1.tgz#63d00d204e059474fe5e1b7c011112bbd1dc29e1"
 
-type-fest@^0.8.1:
+type-fest@^0.8.0, type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
 
@@ -14600,6 +14670,11 @@ wordwrap@0.0.2:
 wordwrap@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
+
+workbox-cdn@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/workbox-cdn/-/workbox-cdn-4.3.1.tgz#f1ffed5368c20291048498ba0744baf27dbd7294"
+  integrity sha512-Adkgo+/7S+bBsDTzdeH0xxQCrfBM1EiyZlvu1tMh0cJ/ipC6TtA8KDr12PBREdbL0zO9hG+7OSzvi2NLchPAEg==
 
 worker-farm@^1.7.0:
   version "1.7.0"
