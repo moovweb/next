@@ -4,7 +4,7 @@
       <SfList>
         <SfListItem
           v-for="item in aboutUs"
-          :key="item"
+          :key="item.key"
           >
           <SfMenuItem
             :data-cy="`app-foter-url_about-us_${item.title.split(' ').join('-').toLowerCase()}`"
@@ -23,7 +23,7 @@
       <SfList>
         <SfListItem
           v-for="item in departments"
-          :key="item"
+          :key="item.key"
           >
           <SfMenuItem
             :data-cy="`app-foter-url_departments_${item.title.split(' ').join('-').toLowerCase()}`"
@@ -42,7 +42,7 @@
       <SfList>
         <SfListItem
           v-for="item in help"
-          :key="item"
+          :key="item.key"
           >
           <SfMenuItem
             :data-cy="`app-foter-url_help_${item.title.split(' ').join('-').toLowerCase()}`"
@@ -61,7 +61,7 @@
       <SfList>
         <SfListItem
           v-for="item in paymentsDelivery"
-          :key="item"
+          :key="item.key"
           >
           <SfMenuItem
             :data-cy="`app-foter-url_help_${item.title.split(' ').join('-').toLowerCase()}`"
@@ -78,7 +78,7 @@
     </SfFooterColumn>
     <SfFooterColumn title="Social">
       <div class="footer__socials">
-        <a target="__blank" :href="getFooterLink(item)" v-for="item in social" :key="item.title" >
+        <a target="__blank" :href="getFooterLink(item)" v-for="item in social" :key="item.key" >
           <SfImage class="footer__social-image" :alt="item.title" :src="'/icons/'+item.icon+'.svg'" width="12" height="12" />
         </a>
       </div>
@@ -108,68 +108,80 @@ export default {
         {
           slug: 'who-we-are',
           type: 'page',
-          title: 'Who we are'
+          title: 'Who we are',
+          key: 1
         },
         {
           slug: 'quality-in-the-details',
           type: 'page',
-          title: 'Quality in the details'
+          title: 'Quality in the details',
+          key: 2
         },
         {
           slug: 'customer-reviews',
           type: 'page',
-          title: 'Customer Reviews'
+          title: 'Customer Reviews',
+          key: 3
         }
       ],
       departments: [
         {
           slug: 'clothes',
           type: 'collection',
-          title: 'Clothes'
+          title: 'Clothes',
+          key: 1
         },
         {
           slug: 'event-dressing',
           type: 'collection',
-          title: 'Event Dressing'
+          title: 'Event Dressing',
+          key: 2
         },
         {
           slug: 'accessories',
           type: 'collection',
-          title: 'Accessories'
+          title: 'Accessories',
+          key: 3
         },
         {
           slug: 'outlet',
           type: 'collection',
-          title: 'Outlet'
+          title: 'Outlet',
+          key: 4
         }
       ],
       help: [
         {
           slug: 'customer-service',
           type: 'page',
-          title: 'Customer service'
+          title: 'Customer service',
+          key: 1
         },
         {
           slug: 'size-guide',
           type: 'page',
-          title: 'Size guide'
+          title: 'Size guide',
+          key: 2
         },
         {
           slug: 'contact-us',
           type: 'page',
-          title: 'Contact us'
+          title: 'Contact us',
+          key: 3
         }
       ],
       paymentsDelivery: [
         {
           slug: 'purchase-terms',
           type: 'page',
-          title: 'Purchase terms'
+          title: 'Purchase terms',
+          key: 1
         },
         {
           slug: 'guarantee',
           type: 'page',
-          title: 'Guarantee'
+          title: 'Guarantee',
+          key: 2
         }
       ],
       social: [
@@ -177,25 +189,29 @@ export default {
           slug: 'https://twitter.com/aureate_labs',
           type: 'social',
           title: 'Twitter',
-          icon: 'twitter'
+          icon: 'twitter',
+          key: 1
         },
         {
           slug: 'https://www.facebook.com/aureate.labs',
           type: 'social',
           title: 'Facebook',
-          icon: 'facebook'
+          icon: 'facebook',
+          key: 2
         },
         {
           slug: 'https://www.instagram.com/aureate_labs',
           type: 'social',
           title: 'Instagram',
-          icon: 'instagram'
+          icon: 'instagram',
+          key: 3
         },
         {
           slug: 'https://www.youtube.com/channel/UC-gHzpwI_CrXplSquIPjppQ',
           type: 'social',
           title: 'Youtube',
-          icon: 'youtube'
+          icon: 'youtube',
+          key: 4
         }
       ],
       isMobile: false,
