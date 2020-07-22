@@ -7,87 +7,78 @@ yarn build:sp
 yarn dev:sp
 ```
 
-![Vue Storefront](https://camo.githubusercontent.com/48c886ac0703e3a46bc0ec963e20f126337229fc/68747470733a2f2f643968687267346d6e767a6f772e636c6f756466726f6e742e6e65742f7777772e76756573746f726566726f6e742e696f2f32383062313964302d6c6f676f2d76735f3062793032633062793032633030303030302e6a7067)
+The Nuxt app is located in packages/shopify/theme
 
-# Vue Storefront Next
+Here's what I've needed to do so far to get it running on the XDN:
 
-[![Coverage Status](https://coveralls.io/repos/github/DivanteLtd/next/badge.svg?branch=master) ](https://coveralls.io/github/DivanteLtd/next?branch=master)<a href="https://slack.vuestorefront.io">![Branch Develop](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)</a>
+## nuxt.config.js changes
 
-**Disclaimer:** This project is still in beta phase. It's not usable to full extend yet. Once its production ready this repo will be merged into the [main repo](https://github.com/DivanteLtd/vue-storefront/).
+- Migrate to ES5 by replacing import with require and export default with module.exports
+- Remove build modules:
 
-Vue Storefront is the most popular and most advanced PWA Headless frontend for eCommerce.
-
-- [Documentation](https://docs-next.vuestorefront.io/) (WIP)
-- [Demo](https://vsf-next-demo.storefrontcloud.io/) (WIP)
-
-![Screenshots](https://blog.vuestorefront.io/wp-content/uploads/2020/03/3-views-Vue-Storefront-.png)
-**Supported platforms**
-
-- Magento 1.9/2
-- Spryker
-- Spree
-- Sylius
-- Shopware 6
-- Commercetools [WIP]
-- AboutYou Cloud [WIP]
-- Salesforce Commerce Cloud [WIP]
-- ...more coming!
-
-## What you need
-
-- [yarn](https://yarnpkg.com/getting-started) - Dependency manager
-- [Lerna](https://github.com/lerna/lerna) - Monorepo manager
-- [Typescript](https://www.typescriptlang.org/docs/home.html) - JavaScript superset
-
-## Installation
-
-**Installing dependencies:**
-
-```sh
-$ yarn install
+```
+  build: {
+    transpile: ["vee-validate/dist/rules"],
+    plugins: [
+      // new webpack.DefinePlugin({
+      //   "process.VERSION": JSON.stringify({
+      //     // eslint-disable-next-line global-require
+      //     version: require("./package.json").version,
+      //     lastCommit: process.env.LAST_COMMIT || ""
+      //   })
+      // })
+    ]
+  },
 ```
 
-**Verify by building packages:**
+and 
 
-```sh
-yarn build:core
-yarn build:prismic
+```
+  plugins: ["./plugins/shopify.js"],
+  // buildModules: [
+  //   // to core
+  //   "@nuxt/typescript-build",
+  //   "@nuxtjs/dotenv",
+  //   ["@nuxtjs/pwa", { icon: false }],
+  //   [
+  //     "@vue-storefront/nuxt",
+  //     {
+  //       coreDevelopment: true,
+  //       useRawSource: {
+  //         dev: ["@vue-storefront/shopify", "@vue-storefront/core"],
+  //         prod: ["@vue-storefront/shopify", "@vue-storefront/core"]
+  //       }
+  //     }
+  //   ],
+  //   [
+  //     "@vue-storefront/nuxt-theme",
+  //     {
+  //       apiClient: "@vue-storefront/shopify-api",
+  //       composables: "@vue-storefront/shopify"
+  //     }
+  //   ]
+  // ],
+  modules: [
 ```
 
-## Commercetools
+## package.json changes:
 
-```sh
-yarn build:ct:tools
+Add the following as dependencies:
+
 ```
-
-then run the app
-
-```sh
-yarn dev:ct
-```
-
-## Shopify
-
-**Verify by api-client packages:**
-
-```sh
-yarn build:sp:api-client
-```
-
-**Start api-client for development mode:**
-
-```sh
-yarn dev:sp:api-client
-```
-
-**Build full package:**
-
-```sh
-yarn build:sp
-```
-
-**Start app in development mode:**
-
-```sh
-yarn dev:sp
+  "dependencies": {
+    "lozad": "^1.15.0",
+    "nuxt-start": "^2.13.3",
+    "@glidejs/glide": "^3.4.1",
+    "@nuxtjs/robots": "^2.4.2",
+    "@vue/composition-api": "^1.0.0-beta.6",
+    "body-scroll-lock": "^3.0.3",
+    "cookie-universal-nuxt": "^2.1.4",
+    "nuxt-i18n": "^6.13.1",
+    "shopify-buy": "^2.11.0",
+    "simplebar-vue": "^1.5.1",
+    "vee-validate": "^3.3.7",
+    "vue": "^2.6.11",
+    "vue-scrollto": "^2.18.1"
+  }
 ```
