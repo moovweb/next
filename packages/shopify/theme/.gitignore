@@ -93,3 +93,5 @@ sw.*
 *.swp
 
 version
+# XDN generated build directory
+.xdn
