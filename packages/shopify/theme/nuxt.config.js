@@ -36,7 +36,7 @@ module.exports = {
     // to core
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
-    ['@nuxtjs/pwa', { icon: false }],
+    // ['@nuxtjs/pwa', { icon: false }], // this adds it's own service worker which would replace the XDN service worker
     [
       '@vue-storefront/nuxt',
       {
@@ -57,7 +57,8 @@ module.exports = {
     'nuxt-i18n',
     'cookie-universal-nuxt',
     'vue-scrollto/nuxt',
-    '@nuxtjs/robots'
+    '@nuxtjs/robots',
+    '@xdn/nuxt/module'
   ],
   modules: [
   ],

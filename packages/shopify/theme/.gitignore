@@ -95,3 +95,5 @@ sw.*
 version
 # XDN generated build directory
 .xdn
+# XDN generated build directory
+.xdn

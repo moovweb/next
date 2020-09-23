@@ -2,12 +2,12 @@
   "version": "v1",
   "packages": {
     "@xdn/core": {
-      "signature": "a5d734e05c29485f6cc915c9511180da",
+      "signature": "4bb62573e81026d2056f7ba3753d283f",
       "file": true,
-      "replaced": "^1.0.0"
+      "replaced": "^2.13.0"
     },
     "@xdn/nuxt": {
-      "signature": "d257265b36abda8ba434368135ad2861",
+      "signature": "5039ae870fcd315e667032bb1b8e5d72",
       "file": true,
       "replaced": "^2.13.0"
     }

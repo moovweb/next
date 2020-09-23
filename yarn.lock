@@ -5312,10 +5312,8 @@
     yargs "^14.2.0"
     yazl "^2.5.1"
 
-"@xdn/core@^2.13.0":
+"@xdn/core@file:packages/shopify/theme/.yalc/@xdn/core":
   version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@xdn/core/-/core-2.13.0.tgz#88a5e13f821785eb390bc8f0a0c94725f9cd9fc1"
-  integrity sha512-DDxFfMHcT7/jTrML74JEYi+SQuAO78IpOu7NRXZ4mXDCVtme5eeYY9V+QwLpFO50VGJZbqHkodYMfBjM+EojNQ==
   dependencies:
     ajv "^6.12.3"
     babel-loader "^8.1.0"
@@ -5345,8 +5343,10 @@
     webpack "^4.44.1"
     webpack-dev-middleware "^3.7.2"
 
-"@xdn/nuxt@file:packages/shopify/theme/.yalc/@xdn/nuxt":
+"@xdn/nuxt@^2.13.0":
   version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@xdn/nuxt/-/nuxt-2.13.0.tgz#99bd1f73a5ffa68232703d2e79805fad47bd16cf"
+  integrity sha512-52jpw5Ffsuw0e93mrO2q0qt5xNRjSk6umXKyUIWrs2n9DDzw0XPuF+LQSLol8qCyoJk3FhnRCgPeWWOdpQIHkA==
   dependencies:
     "@types/cross-spawn" "^6.0.2"
     chalk "^3.0.0"
@@ -14407,7 +14407,7 @@ nuxt@^2.10.2:
     "@nuxt/opencollective" "^0.3.0"
     "@nuxt/webpack" "2.12.2"
 
-nuxt@^2.13.3:
+nuxt@^2.14.6:
   version "2.14.6"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.6.tgz#56ba99cbd055ebdb33250a4d1ed09f084ad7fa14"
   integrity sha512-ZsoJPxJ9qIWXeLFW6tSQFCtZteNWc/5cRHPhpCak7VF3OIvVExnSJSruTQVtDwj6VJhqXCJ6c0g62T6JYj1HcQ==
