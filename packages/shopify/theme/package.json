@@ -31,7 +31,7 @@
     "@vue-storefront/shopify-api": "^0.0.1",
     "@vue/test-utils": "^1.0.0-beta.27",
     "@xdn/cli": "^1.42.1",
-    "@xdn/core": "file:.yalc/@xdn/core",
+    "@xdn/core": "^1.42.1",
     "@xdn/nuxt": "^1.42.1",
     "@xdn/prefetch": "^1.42.1",
     "@xdn/vue": "^1.42.1",
