@@ -1,6 +1,14 @@
 global.fetch = require('node-fetch');
-require('dotenv').config();
-const webpack = require('webpack');
+
+let webpack
+
+try {
+  require('dotenv').config();
+  webpack = require('webpack')
+} catch (e) {
+  // will get here in the cloud, but we can just catch this error because webpack is only needed during the build phase
+}
+
 const localeConfig = require('./lang/config');
 
 module.exports = {
@@ -45,15 +53,15 @@ module.exports = {
         apiClient: '@vue-storefront/shopify-api',
         composables: '@vue-storefront/shopify'
       }
-    ]
-  ],
-  modules: [
+    ],
     'nuxt-i18n',
     'cookie-universal-nuxt',
     'vue-scrollto/nuxt',
     '@nuxtjs/robots'
   ],
-  build: {
+  modules: [
+  ],
+  build: webpack && {
     transpile: ['vee-validate/dist/rules'],
     plugins: [
       new webpack.DefinePlugin({

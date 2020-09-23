@@ -1,10 +1,11 @@
-// This file was automatically added by xdn deploy.
+// This file was added by xdn init.
 // You should commit this file to source control.
 
-const { Router } = require("@xdn/core/router");
-const { createNuxtPlugin } = require("@xdn/nuxt");
-const { nuxtMiddleware } = createNuxtPlugin();
+const { Router } = require('@xdn/core/router')
+const { nuxtRoutes } = require('@xdn/nuxt')
 
-module.exports = new Router().use(nuxtMiddleware).fallback(({ proxy }) => {
-  proxy("__js__");
-});
+module.exports = new Router()
+  // .match('/service-worker.js', ({ serviceWorker }) => {
+  //   serviceWorker('.nuxt/dist/client/service-worker.js')
+  // })
+  .use(nuxtRoutes)
