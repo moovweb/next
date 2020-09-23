@@ -1,13 +1,11 @@
-// This file was added by xdn init.
-// You should commit this file to source control.
-
 const { Router } = require('@xdn/core/router')
-const { nuxtRoutes } = require('@xdn/nuxt')
+const { nuxtRoutes, renderNuxtPage } = require('@xdn/nuxt')
 
 const HTML = {
   edge: {
     maxAgeSeconds: 60 * 60 * 24,
-    staleWhileRevalidateSeconds: 60 * 60 * 24
+    staleWhileRevalidateSeconds: 60 * 60 * 24,
+    forcePrivateCaching: true
   },
   browser: false
 }
@@ -26,3 +24,4 @@ module.exports = new Router()
     cache(HTML)
   })
   .use(nuxtRoutes)
+  .fallback(renderNuxtPage)
