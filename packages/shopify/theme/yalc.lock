@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "packages": {
+    "@xdn/core": {
+      "signature": "a5d734e05c29485f6cc915c9511180da",
+      "file": true,
+      "replaced": "^1.0.0"
+    },
+    "@xdn/nuxt": {
+      "signature": "d257265b36abda8ba434368135ad2861",
+      "file": true,
+      "replaced": "^2.13.0"
+    }
+  }
+}
